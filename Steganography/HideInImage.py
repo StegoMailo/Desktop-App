@@ -73,7 +73,7 @@ class HideInImage():
                                math.ceil(len(informationToHide) / 3))
 
         # Hide the Watermark Bit stream in the pixels
-
+        
         i = 0
 
         for point in points:
