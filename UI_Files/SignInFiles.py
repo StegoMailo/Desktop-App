@@ -1,18 +1,20 @@
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QDialog, QStackedWidget
 from PyQt5.uic import loadUi
 
 
+
 class EmailSignIn(QDialog):
-    def __init__(self, stacked_widget):
+    widgets:QStackedWidget
+    def __init__(self,allWidgets):
         super(EmailSignIn, self).__init__()
         loadUi('Email Sign In.ui', self)
 
-        stacked_widget.setFixedWidth(520)
-        stacked_widget.setFixedHeight(620)
-        self.stacked_widget = stacked_widget
+        self.widgets = allWidgets.widgets
 
         self.btnNext.clicked.connect(self.goToPhoneNumber)
+
+        self.btnAbandon.clicked.connect(allWidgets.abandonSignIn)
 
         self.btnSendCode.clicked.connect(self.SendVerificationCode)
 
@@ -41,48 +43,84 @@ class EmailSignIn(QDialog):
         self.btnNext.setHidden(False)
 
     def goToPhoneNumber(self):
-        self.stacked_widget.setCurrentIndex(2)
+        self.widgets.setCurrentIndex(2)
+
+
+
 
 
 class PasswordSignIn(QDialog):
-    def __init__(self, stacked_widget):
+    widgets:QStackedWidget
+    def __init__(self,allWidgets):
         super(PasswordSignIn, self).__init__()
         loadUi('Password Sign In.ui', self)
+        self.widgets = allWidgets.widgets
 
-        stacked_widget.setFixedWidth(520)
-        stacked_widget.setFixedHeight(620)
-        self.stacked_widget = stacked_widget
+        self.tfPassword.setEchoMode(QtWidgets.QLineEdit.Password)
 
+        self.btnAbandon.clicked.connect(allWidgets.abandonSignIn)
 
-        self.password.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.btnVerifyPassword.clicked.connect(self.verifyPassword)
 
+        self.btnBack.clicked.connect(self.backToEmail)
         self.btnNext.clicked.connect(self.goToPhoneNumber)
-        self.btnVerifyPassword.clicked.connect(self.goToPhoneNumber)
-        self.btnBack.clicked.connect(self.goToPhoneNumber)
 
+        self.btnNext.setHidden(True)
 
     def verifyPassword(self):
         password = self.tfPassword.text()
         print("Your Password Is:" + password)
+        self.btnNext.setHidden(False)
 
     def backToEmail(self):
-        self.stacked_widget.setCurrentIndex(1)
-
+        self.widgets.setCurrentIndex(1)
 
     def goToPhoneNumber(self):
-        self.stacked_widget.setCurrentIndex(2)
+        self.widgets.setCurrentIndex(3)
+
+
+
 
 
 class PhoneSignIn(QDialog):
-    def __init__(self):
+    widgets: QStackedWidget
+
+    def __init__(self,allWidgets):
         super(PhoneSignIn, self).__init__()
-        loadUi('phoneSignIn.ui', self)
+        loadUi('Phone Sign In.ui', self)
+        self.widgets = allWidgets.widgets
 
-    def loginfunction(self):
-        phone = self.phone.text()
-        print("Successfully logged in with phone:", phone)
-        verification = self.verification.text()
-        print("Verification code sent as: " + verification)
+        self.btnAbandon.clicked.connect(allWidgets.abandonSignIn)
 
-    def verificationfunction(self):
-        print("Verification code is: 73R9TC")
+        self.btnSignIn.clicked.connect(self.signIn)
+
+        self.btnSendCode.clicked.connect(self.sendVerifcationCode)
+
+        self.btnVerifyCode.clicked.connect(self.verifyCode)
+
+        self.btnSignIn.setHidden(True)
+
+        self.btnBack.clicked.connect(self.backToPassword)
+
+    def sendVerifcationCode(self):
+        phoneNumber = self.tfPhoneNumber.text()
+        print("Phone Code sent was 123124124312 to:" + phoneNumber)
+        self.btnSendCode.setHidden(True)
+
+    def verifyCode(self):
+        print("Code is Valid")
+        self.btnSendCode.setHidden(False)
+        self.btnSignIn.setHidden(False)
+
+    def signIn(self):
+        phoneNumber = self.tfPhoneNumber.text()
+        print("Successfully logged in with phone:", phoneNumber)
+
+    def backToPassword(self):
+        self.widgets.setCurrentIndex(2)
+
+
+
+
+
+

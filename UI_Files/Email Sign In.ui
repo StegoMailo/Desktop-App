@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>620</height>
+    <width>520</width>
+    <height>630</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>310</y>
+     <y>300</y>
      <width>121</width>
      <height>41</height>
     </rect>
@@ -82,8 +82,8 @@ background-color: rgb(248, 248, 248);</string>
    <property name="geometry">
     <rect>
      <x>370</x>
-     <y>560</y>
-     <width>121</width>
+     <y>570</y>
+     <width>131</width>
      <height>41</height>
     </rect>
    </property>
@@ -103,8 +103,8 @@ background-color: rgb(138, 198, 253,0.5);</string>
   <widget class="QLabel" name="txtSignInTitle">
    <property name="geometry">
     <rect>
-     <x>190</x>
-     <y>190</y>
+     <x>180</x>
+     <y>200</y>
      <width>161</width>
      <height>71</height>
     </rect>
@@ -152,8 +152,8 @@ border: 0.5px solid #000000;</string>
   <widget class="QLabel" name="progessEmail">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>50</y>
+     <x>50</x>
+     <y>60</y>
      <width>111</width>
      <height>111</height>
     </rect>
@@ -181,8 +181,8 @@ border: 0.5px solid #000000;</string>
   <widget class="QLabel" name="progessPassword">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>50</y>
+     <x>210</x>
+     <y>60</y>
      <width>111</width>
      <height>111</height>
     </rect>
@@ -208,11 +208,11 @@ border: 2px solid rgb(0, 0, 0);
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="progessPassword_2">
+  <widget class="QLabel" name="progressPhone">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>50</y>
+     <x>370</x>
+     <y>60</y>
      <width>111</width>
      <height>111</height>
     </rect>
@@ -244,8 +244,8 @@ border: 2px solid rgb(0, 0, 0);
    </property>
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>100</y>
+     <x>130</x>
+     <y>110</y>
      <width>101</width>
      <height>16</height>
     </rect>
@@ -263,8 +263,8 @@ border: 2px solid rgb(0, 0, 0);
    </property>
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>100</y>
+     <x>290</x>
+     <y>110</y>
      <width>101</width>
      <height>16</height>
     </rect>
@@ -282,8 +282,8 @@ border: 2px solid rgb(0, 0, 0);
    </property>
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>100</y>
+     <x>20</x>
+     <y>110</y>
      <width>101</width>
      <height>16</height>
     </rect>
@@ -321,6 +321,31 @@ background-color: rgb(138, 198, 253,0.5);</string>
     <string>Verify Code</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="btnAbandon">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>131</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border: 0.5px solid #000000;
+background-color: rgb(138, 198, 253,0.5);</string>
+   </property>
+   <property name="text">
+    <string>Abandon</string>
+   </property>
+  </widget>
   <zorder>Entry</zorder>
   <zorder>PasswordToPhone</zorder>
   <zorder>EmailToPassword</zorder>
@@ -333,8 +358,9 @@ background-color: rgb(138, 198, 253,0.5);</string>
   <zorder>btnSendCode</zorder>
   <zorder>progessEmail</zorder>
   <zorder>progessPassword</zorder>
-  <zorder>progessPassword_2</zorder>
+  <zorder>progressPhone</zorder>
   <zorder>btnVerify</zorder>
+  <zorder>btnAbandon</zorder>
  </widget>
  <resources/>
  <connections/>
