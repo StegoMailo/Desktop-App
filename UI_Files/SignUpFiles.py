@@ -67,7 +67,7 @@ class PasswordSignUp(QDialog):
 
     def confirmPassword(self):
         password = self.tfPassword.text()
-        reenteredPassword = self.tfReenteredPasssword.text()
+        reenteredPassword = self.tfReenterPassword.text()
         print("Your Password Is:" + password)
         print("Your second Password Is:" + reenteredPassword)
         self.btnNext.setHidden(False)
@@ -76,7 +76,7 @@ class PasswordSignUp(QDialog):
         self.widgets.setCurrentIndex(4)
 
     def goToPhoneNumber(self):
-        self.widgets.setCurrentIndex(5)
+        self.widgets.setCurrentIndex(6)
 
 
 class PhoneSignUp(QDialog):
@@ -84,14 +84,36 @@ class PhoneSignUp(QDialog):
 
     def __init__(self, allWidgets):
         super(PhoneSignUp, self).__init__()
-        loadUi('phoneSignUp.ui', self)
+        loadUi('Phone Sign Up.ui', self)
         self.stackedWidget = allWidgets.widgets
+        self.widgets = allWidgets.widgets
 
-    def loginfunction(self):
-        phone = self.phone.text()
-        print("Successfully logged in with phone:", phone)
-        verification = self.verification.text()
-        print("Verification code sent as: " + verification)
+        self.btnAbandon.clicked.connect(allWidgets.abandonSignIn)
 
-    def verificationfunction(self):
-        print("Verification code is: 73R9TC")
+        self.btnSignIn.clicked.connect(self.signIn)
+
+        self.btnSendCode.clicked.connect(self.sendVerifcationCode)
+
+        self.btnVerifyCode.clicked.connect(self.verifyCode)
+
+        self.btnSignIn.setHidden(True)
+
+        self.btnBack.clicked.connect(self.backToPassword)
+
+    def sendVerifcationCode(self):
+        phoneNumber = self.tfPhoneNumber.text()
+        print("Phone Code sent was 123124124312 to:" + phoneNumber)
+        self.btnSendCode.setHidden(True)
+
+    def verifyCode(self):
+        print("Code is Valid")
+        self.btnSendCode.setHidden(False)
+        self.btnSignIn.setHidden(False)
+
+    def signIn(self):
+        phoneNumber = self.tfPhoneNumber.text()
+        print("Successfully logged in with phone:", phoneNumber)
+
+    def backToPassword(self):
+        self.widgets.setCurrentIndex(5)
+

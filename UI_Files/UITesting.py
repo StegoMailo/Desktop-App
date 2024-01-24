@@ -36,7 +36,6 @@ class allWidgets():
         allWidgets.widgetsObjects[3].close()
         allWidgets.widgetsObjects[3] = PhoneSignIn(allWidgets)
         allWidgets.widgets.insertWidget(3, allWidgets.widgetsObjects[3])
-        print("TEST")
 
         allWidgets.widgets.removeWidget(allWidgets.widgetsObjects[2])
         allWidgets.widgetsObjects[2].close()
@@ -56,7 +55,6 @@ class allWidgets():
         allWidgets.widgetsObjects[6].close()
         allWidgets.widgetsObjects[6] = PhoneSignUp(allWidgets)
         allWidgets.widgets.insertWidget(6, allWidgets.widgetsObjects[6])
-        print("TEST")
 
         allWidgets.widgets.removeWidget(allWidgets.widgetsObjects[5])
         allWidgets.widgetsObjects[5].close()
