@@ -4,56 +4,88 @@ from PyQt5.uic import loadUi
 
 
 class EmailSignUp(QDialog):
+    stackedWidget: QStackedWidget
 
-    stackedWidget:QStackedWidget
-    def __init__(self, stackedWidget):
+    def __init__(self, allWidgets):
         super(EmailSignUp, self).__init__()
         loadUi('Email Sign Up.ui', self)
-        self.nextButton.clicked.connect(self.goToNumber)
-        self.stackedWidget = stackedWidget
 
-    def loginfunction(self):
-        email = self.email.text()
-        print("Successfully logged in with email:", email)
-        verification = self.verification.text()
+        self.widgets = allWidgets.widgets
+
+        self.btnNext.clicked.connect(self.goToPhoneNumber)
+
+        self.btnAbandon.clicked.connect(allWidgets.abandonSignUp)
+
+        self.btnSendCode.clicked.connect(self.SendVerificationCode)
+
+        self.btnVerify.clicked.connect(self.VerifyCode)
+
+        self.txtSignInEmailVerification.setHidden(True)
+        self.tfVerificationCode.setHidden(True)
+
+        self.btnVerify.setHidden(True)
+
+        self.btnNext.setHidden(True)
+
+    def SendVerificationCode(self):
+        self.btnSendCode.setHidden(True)
+        print("Code Sent Is: 42R6UM")
+
+        self.txtSignInEmailVerification.setHidden(False)
+        self.tfVerificationCode.setHidden(False)
+        self.btnVerify.setHidden(False)
+
+    def VerifyCode(self):
+        verification = self.tfVerificationCode.text()
         print("Verification code sent as: " + verification)
 
-    def verificationfunction(self):
-        print("Verification code is: 42R6UM")
+        self.btnSendCode.setHidden(False)
+        self.btnNext.setHidden(False)
 
-    def goToNumber(self):
-        phone = PhoneSignUp()
-        self.stackedWidget.addWidget(phone)
-        self.stackedWidget.setCurrentIndex(6)
-
-
+    def goToPhoneNumber(self):
+        self.widgets.setCurrentIndex(5)
 
 
 class PasswordSignUp(QDialog):
-    def __init__(self, stacked_widget):
+    stackedWidget: QStackedWidget
+
+    def __init__(self, allWidgets):
         super(PasswordSignUp, self).__init__()
-        loadUi('Uis/passwdSignUp.ui', self)
-        self.nextButton.clicked.connect(self.goToEmail)
-        self.password.setEchoMode(QLineEdit.Password)
-        self.repassword.setEchoMode(QLineEdit.Password)
-        self.stacked_widget = stacked_widget
+        loadUi('Password Sign Up.ui', self)
+        self.widgets = allWidgets.widgets
 
-    def loginfunction(self):
-        password = self.password.text()
-        print("Successfully logged in with password:", password)
+        self.tfPassword.setEchoMode(QtWidgets.QLineEdit.Password)
 
-    def goToEmail(self):
-        emailSignUp = EmailSignUp(self.stacked_widget)
-        self.stacked_widget.addWidget(emailSignUp)
-        self.stacked_widget.setCurrentIndex(5)
+        self.btnAbandon.clicked.connect(allWidgets.abandonSignUp)
 
-from PyQt5.QtWidgets import QDialog
-from PyQt5.uic import loadUi
+        self.btnConfirm.clicked.connect(self.confirmPassword)
+
+        self.btnBack.clicked.connect(self.backToEmail)
+        self.btnNext.clicked.connect(self.goToPhoneNumber)
+
+        self.btnNext.setHidden(True)
+
+    def confirmPassword(self):
+        password = self.tfPassword.text()
+        reenteredPassword = self.tfReenteredPasssword.text()
+        print("Your Password Is:" + password)
+        print("Your second Password Is:" + reenteredPassword)
+        self.btnNext.setHidden(False)
+
+    def backToEmail(self):
+        self.widgets.setCurrentIndex(4)
+
+    def goToPhoneNumber(self):
+        self.widgets.setCurrentIndex(5)
+
 
 class PhoneSignUp(QDialog):
-    def __init__(self):
+    stackedWidget: QStackedWidget
+
+    def __init__(self, allWidgets):
         super(PhoneSignUp, self).__init__()
-        loadUi('Uis/phoneSignUp.ui', self)
+        loadUi('phoneSignUp.ui', self)
+        self.stackedWidget = allWidgets.widgets
 
     def loginfunction(self):
         phone = self.phone.text()
@@ -63,6 +95,3 @@ class PhoneSignUp(QDialog):
 
     def verificationfunction(self):
         print("Verification code is: 73R9TC")
-
-
-
