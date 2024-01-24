@@ -103,9 +103,9 @@ background-color: rgb(138, 198, 253,0.5);</string>
   <widget class="QLabel" name="txtSignInTitle">
    <property name="geometry">
     <rect>
-     <x>180</x>
+     <x>140</x>
      <y>200</y>
-     <width>161</width>
+     <width>270</width>
      <height>71</height>
     </rect>
    </property>
@@ -302,9 +302,9 @@ background-color: rgb(0, 179, 30);</string>
    </property>
    <property name="geometry">
     <rect>
-     <x>190</x>
+     <x>200</x>
      <y>510</y>
-     <width>121</width>
+     <width>141</width>
      <height>41</height>
     </rect>
    </property>

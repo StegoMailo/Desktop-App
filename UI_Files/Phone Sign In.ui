@@ -16,25 +16,55 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(248, 248, 248);</string>
   </property>
-  <widget class="QLabel" name="txtPassword">
+  <widget class="QLabel" name="txtPhoneNumber">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>10</x>
      <y>300</y>
      <width>121</width>
      <height>41</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; color:#000000;&quot;&gt;Password :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; color:#000000;&quot;&gt;Your Phone :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="tfPassword">
+  <widget class="QLineEdit" name="tfPhoneNumber">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>190</x>
      <y>300</y>
-     <width>261</width>
+     <width>191</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(198, 198, 198);
+background-color: rgb(248, 248, 248);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="txtVerificationCode">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>360</y>
+     <width>171</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; color:#000000;&quot;&gt;Verification code:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="tfVerificationCode">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>360</y>
+     <width>191</width>
      <height>41</height>
     </rect>
    </property>
@@ -45,7 +75,7 @@
     <string/>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnNext">
+  <widget class="QPushButton" name="btnSignIn">
    <property name="geometry">
     <rect>
      <x>370</x>
@@ -64,16 +94,16 @@
 background-color: rgb(138, 198, 253,0.5);</string>
    </property>
    <property name="text">
-    <string>Next</string>
+    <string>Sign In</string>
    </property>
   </widget>
-  <widget class="QLabel" name="txtSignInTitle">
+  <widget class="QLabel" name="txtSignInTittle">
    <property name="geometry">
     <rect>
      <x>140</x>
      <y>200</y>
      <width>270</width>
-     <height>71</height>
+     <height>70</height>
     </rect>
    </property>
    <property name="font">
@@ -88,103 +118,51 @@ background-color: rgb(138, 198, 253,0.5);</string>
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="PasswordToPhone">
+  <widget class="QPushButton" name="btnSendCode">
    <property name="enabled">
     <bool>true</bool>
    </property>
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>110</y>
-     <width>101</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border: 2px solid rgb(0, 0, 0);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="EmailToPassword">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>110</y>
-     <width>101</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">
-background-color: rgb(0, 179, 30);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="progressPhone">
-   <property name="geometry">
-    <rect>
-     <x>370</x>
-     <y>60</y>
-     <width>111</width>
-     <height>111</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">  height: 50px;
-  width: 50px;
-  background-color: rgb(255, 255, 255);
-border: 2px solid rgb(0, 0, 0);
-  border-radius: 55%;</string>
-   </property>
-   <property name="text">
-    <string>Phone</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="progessPassword">
    <property name="geometry">
     <rect>
      <x>210</x>
-     <y>60</y>
-     <width>111</width>
-     <height>111</height>
+     <y>430</y>
+     <width>121</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
+     <pointsize>14</pointsize>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">  height: 50px;
-  width: 50px;
-  background-color: rgb(255, 255, 255);
-  background-color: rgb(0, 170, 255);
-  border-radius: 55%;</string>
+    <string notr="true">background-color: rgb(138, 198, 253,0.5);
+border: 0.5px solid #000000;</string>
    </property>
    <property name="text">
-    <string>Password</string>
+    <string>Send Code</string>
    </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
+  </widget>
+  <widget class="QPushButton" name="btnAbandon">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>131</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border: 0.5px solid #000000;
+background-color: rgb(138, 198, 253,0.5);</string>
+   </property>
+   <property name="text">
+    <string>Abandon</string>
    </property>
   </widget>
   <widget class="QLabel" name="progessEmail">
@@ -217,6 +195,84 @@ background-color: rgb(0, 179, 30);
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
+  <widget class="QLabel" name="PasswordToPhone">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>110</y>
+     <width>101</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(0, 179, 30);
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="progressPhone">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>60</y>
+     <width>111</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">  height: 50px;
+  width: 50px;
+  background-color: rgb(0, 170, 255);
+  border-radius: 55%;</string>
+   </property>
+   <property name="text">
+    <string>Phone</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="progessPassword">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>60</y>
+     <width>111</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">  height: 50px;
+  width: 50px;
+background-color: rgb(0, 179, 30);
+  border-radius: 55%;</string>
+   </property>
+   <property name="text">
+    <string>Password</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
   <widget class="QLabel" name="Entry">
    <property name="enabled">
     <bool>true</bool>
@@ -237,26 +293,24 @@ background-color: rgb(0, 179, 30);</string>
     <string/>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnVerifyPassword">
+  <widget class="QLabel" name="EmailToPassword">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>410</y>
-     <width>131</width>
-     <height>41</height>
+     <x>130</x>
+     <y>110</y>
+     <width>101</width>
+     <height>16</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>14</pointsize>
-    </font>
-   </property>
    <property name="styleSheet">
-    <string notr="true">border: 0.5px solid #000000;
-background-color: rgb(138, 198, 253,0.5);</string>
+    <string notr="true">
+background-color: rgb(0, 179, 30);</string>
    </property>
    <property name="text">
-    <string>Verify</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="btnBack">
@@ -264,7 +318,7 @@ background-color: rgb(138, 198, 253,0.5);</string>
     <rect>
      <x>10</x>
      <y>570</y>
-     <width>131</width>
+     <width>121</width>
      <height>41</height>
     </rect>
    </property>
@@ -281,12 +335,12 @@ background-color: rgb(138, 198, 253,0.5);</string>
     <string>Back</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnAbandon">
+  <widget class="QPushButton" name="btnVerifyCode">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>131</width>
+     <x>200</x>
+     <y>490</y>
+     <width>141</width>
      <height>41</height>
     </rect>
    </property>
@@ -296,26 +350,29 @@ background-color: rgb(138, 198, 253,0.5);</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border: 0.5px solid #000000;
-background-color: rgb(138, 198, 253,0.5);</string>
+    <string notr="true">background-color: rgb(138, 198, 253,0.5);
+border: 0.5px solid #000000;</string>
    </property>
    <property name="text">
-    <string>Abandon</string>
+    <string>Verify Code</string>
    </property>
   </widget>
-  <zorder>Entry</zorder>
-  <zorder>txtPassword</zorder>
-  <zorder>tfPassword</zorder>
-  <zorder>btnNext</zorder>
-  <zorder>txtSignInTitle</zorder>
-  <zorder>PasswordToPhone</zorder>
   <zorder>EmailToPassword</zorder>
+  <zorder>Entry</zorder>
+  <zorder>txtPhoneNumber</zorder>
+  <zorder>tfPhoneNumber</zorder>
+  <zorder>txtVerificationCode</zorder>
+  <zorder>tfVerificationCode</zorder>
+  <zorder>btnSignIn</zorder>
+  <zorder>txtSignInTittle</zorder>
+  <zorder>btnSendCode</zorder>
+  <zorder>btnAbandon</zorder>
+  <zorder>progessEmail</zorder>
+  <zorder>PasswordToPhone</zorder>
   <zorder>progressPhone</zorder>
   <zorder>progessPassword</zorder>
-  <zorder>progessEmail</zorder>
-  <zorder>btnVerifyPassword</zorder>
   <zorder>btnBack</zorder>
-  <zorder>btnAbandon</zorder>
+  <zorder>btnVerifyCode</zorder>
  </widget>
  <resources/>
  <connections/>
