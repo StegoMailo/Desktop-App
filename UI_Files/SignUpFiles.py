@@ -1,4 +1,5 @@
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QDialog, QLineEdit, QStackedWidget
 from PyQt5.uic import loadUi
 
@@ -113,6 +114,8 @@ class PhoneSignUp(QDialog):
     def signIn(self):
         phoneNumber = self.tfPhoneNumber.text()
         print("Successfully logged in with phone:", phoneNumber)
+        self.widgets.setCurrentIndex(7)
+        self.widgets.setFixedSize(QSize(1223,685))
 
     def backToPassword(self):
         self.widgets.setCurrentIndex(5)

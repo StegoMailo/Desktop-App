@@ -22,7 +22,7 @@ class HideInImage():
         self.coverImageSize = len(coverImage) * len(coverImage[0]) * 3  # In Bytes
 
         # Load Watermark to Hide
-        with open(watermarkFileName, 'rb') as fp:
+        with open(watermarkFileName, 'rb') as fp:#watermark = secret
             watermarkByteStream = fp.read()
 
         maxLogoSize = self.coverImageSize  # But in bits

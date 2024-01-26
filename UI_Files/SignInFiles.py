@@ -1,5 +1,6 @@
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QDialog, QStackedWidget
+from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QDialog, QStackedWidget, QMessageBox
 from PyQt5.uic import loadUi
 
 
@@ -28,15 +29,33 @@ class EmailSignIn(QDialog):
         self.btnNext.setHidden(True)
 
     def SendVerificationCode(self):
-        self.btnSendCode.setHidden(True)
-        print("Code Sent Is: 42R6UM")
 
+        codeToSend = "1232131" #generate Code
+        print("Code Sent Is: "+codeToSend)
+
+        self.btnSendCode.setHidden(True)
         self.txtSignInEmailVerification.setHidden(False)
         self.tfVerificationCode.setHidden(False)
         self.btnVerify.setHidden(False)
 
     def VerifyCode(self):
         verification = self.tfVerificationCode.text()
+        codeToSend=""
+        if verification == codeToSend:
+            print("Verified")
+        else:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+
+            msg.setText("Shawarma!")
+
+            msg.setWindowTitle("Invalid Key")
+
+            msg.setStandardButtons(QMessageBox.Ok)
+            retval = msg.exec_()
+
+
+
         print("Verification code sent as: " + verification)
 
         self.btnSendCode.setHidden(False)
@@ -115,6 +134,8 @@ class PhoneSignIn(QDialog):
     def signIn(self):
         phoneNumber = self.tfPhoneNumber.text()
         print("Successfully logged in with phone:", phoneNumber)
+        self.widgets.setCurrentIndex(7)
+        self.widgets.setFixedSize(QSize(1223,685))
 
     def backToPassword(self):
         self.widgets.setCurrentIndex(2)

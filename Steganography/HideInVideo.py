@@ -17,6 +17,7 @@ class HideInVideo():
         return '{0:08b}'.format(number)
 
     def hideInVideo(self, coverVideoPath, fileToHidePath, useAudio, seed=-1,key=-1):
+
         # Open Cover Video
 
         coverVideo = cv2.VideoCapture(coverVideoPath)

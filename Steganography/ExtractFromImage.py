@@ -14,8 +14,9 @@ class ExtractFromImage():
     def BinaryStringToInteger(self, BinaryString):
         return int(BinaryString, 2)
 
-    def extractFromImage(self, watermarkImagePath, outputDestination, seed, key, iv):
-        WatermarkedImage = cv2.imread(watermarkImagePath)
+    def extractFromImage(self, watermarkedImagePath, outputDestination, seed, key, iv):
+
+        WatermarkedImage = cv2.imread(watermarkedImagePath)
         WatermarkedImage = cv2.cvtColor(WatermarkedImage, cv2.COLOR_BGR2RGB)
 
         # Generate random sequence to extract Logo Information
@@ -111,7 +112,6 @@ class ExtractFromImage():
         for point in points2:
             for color in range(len(WatermarkedImage[point[0]][point[1]])):
                 if i > logoInformationSize - 1:
-
                     if i == LogoLength + logoInformationSize:
                         break
 

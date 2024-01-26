@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1252</width>
-    <height>794</height>
+    <width>670</width>
+    <height>601</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,63 +16,68 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(248, 248, 248);</string>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="txtKey">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>260</y>
+     <x>50</x>
+     <y>200</y>
      <width>161</width>
      <height>41</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; color:#000000;&quot;&gt;Encryption Key : &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; color:#000000;&quot;&gt;Encryption Key: &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="txtSeed">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>330</y>
+     <x>50</x>
+     <y>270</y>
      <width>161</width>
      <height>41</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; color:#000000;&quot;&gt;Your Seed : &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; color:#000000;&quot;&gt;Your Seed: &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="txtSound">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>400</y>
+     <x>50</x>
+     <y>340</y>
      <width>161</width>
      <height>41</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; color:#000000;&quot;&gt;Use Sound ?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; color:#000000;&quot;&gt;Use Sound?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="txtSave">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>470</y>
-     <width>171</width>
+     <x>10</x>
+     <y>410</y>
+     <width>211</width>
      <height>41</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; color:#000000;&quot;&gt;Save Stego Media ?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>Save Stego Media?</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="useSound_checkBox">
+  <widget class="QCheckBox" name="chkSound">
    <property name="geometry">
     <rect>
-     <x>630</x>
-     <y>400</y>
+     <x>330</x>
+     <y>340</y>
      <width>71</width>
      <height>41</height>
     </rect>
@@ -86,11 +91,11 @@
     <string>YES</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="saveStegoMedia_checkBox">
+  <widget class="QCheckBox" name="chkSave">
    <property name="geometry">
     <rect>
-     <x>630</x>
-     <y>470</y>
+     <x>330</x>
+     <y>410</y>
      <width>71</width>
      <height>41</height>
     </rect>
@@ -104,11 +109,11 @@
     <string>YES</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="EncryptionKey_lineEdit">
+  <widget class="QLineEdit" name="tfKey">
    <property name="geometry">
     <rect>
-     <x>570</x>
-     <y>260</y>
+     <x>230</x>
+     <y>200</y>
      <width>391</width>
      <height>41</height>
     </rect>
@@ -122,11 +127,11 @@
     <string notr="true">background-color: rgb(248, 248, 248);</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="yourSeed_lineEdit">
+  <widget class="QLineEdit" name="tfSeed">
    <property name="geometry">
     <rect>
-     <x>570</x>
-     <y>330</y>
+     <x>230</x>
+     <y>270</y>
      <width>391</width>
      <height>41</height>
     </rect>
@@ -140,24 +145,32 @@
     <string notr="true">background-color: rgb(248, 248, 248);</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QLabel" name="txtTitle">
    <property name="geometry">
     <rect>
-     <x>520</x>
-     <y>150</y>
-     <width>231</width>
-     <height>41</height>
+     <x>170</x>
+     <y>70</y>
+     <width>361</width>
+     <height>71</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>24</pointsize>
+    </font>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:24pt; color:#000000;&quot;&gt;Advance Setting&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>Advanced Settings</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="Done_Button">
+  <widget class="QPushButton" name="btnDone">
    <property name="geometry">
     <rect>
-     <x>580</x>
-     <y>560</y>
+     <x>300</x>
+     <y>500</y>
      <width>121</width>
      <height>41</height>
     </rect>
