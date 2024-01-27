@@ -5,6 +5,7 @@ from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QApplication, QStackedWidget, QDialog
 from PyQt5.uic import loadUi
 
+from UI_Files.ReceiveStegoMailFiles import Decryption
 from UI_Files.SendStegoMailFiles import Encryption, AdvancedSettings, EmailInformation, SentEmailStatus
 from UI_Files.SignInFiles import PasswordSignIn, PhoneSignIn,EmailSignIn
 from UI_Files.SignUpFiles import EmailSignUp, PasswordSignUp, PhoneSignUp
@@ -117,13 +118,17 @@ sendStegoMail = SentEmailStatus(allWidgets)
 allWidgets.widgetsObjects.append(sendStegoMail)
 allWidgets.widgets.addWidget(sendStegoMail)#index 10
 
+decryption = Decryption(allWidgets)
+allWidgets.widgetsObjects.append(decryption)
+allWidgets.widgets.addWidget(decryption)#index 11
+
 
 allWidgets.widgets.setFixedWidth(520)
 allWidgets.widgets.setFixedHeight(630)
 
 allWidgets.widgets.show()
 
-allWidgets.widgets.setCurrentIndex(7)
+allWidgets.widgets.setCurrentIndex(11)
 allWidgets.widgets.setFixedSize(QSize(1223, 685))
 
 app.exec_()

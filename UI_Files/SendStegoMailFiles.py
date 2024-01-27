@@ -192,8 +192,8 @@ class Encryption(QDialog):
 
         self.btnAdvancedSettings.clicked.connect(self.goToAdvancedSettings)
 
-        self.btnDecryption.clicked.connect(self.on_Decryption_pushButton_clicked)
-        self.EmailStatusButton.clicked.connect(self.on_EmailStatus_pushButton_clicked)
+        self.btnDecryption.clicked.connect(self.goToDecryption)
+        self.btnEmailStatus.clicked.connect(self.goToEmailStatus)
 
         self.txtCoverMediaArea = DraggableFilesQLabelCoverMedia(self, self.txtMediaName, self.txtMediaSize,
                                                                 self.txtMaxSecretMessageSize)
