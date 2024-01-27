@@ -95,7 +95,7 @@ background-color: rgb(138, 198, 253);
 </string>
    </property>
   </widget>
-  <widget class="QPushButton" name="UploadEncryptedMedia_pushButton">
+  <widget class="QPushButton" name="btnUploadStego">
    <property name="geometry">
     <rect>
      <x>320</x>
@@ -121,12 +121,12 @@ border: 0.5px solid #000000;
     <string>Open Stego Media From Device</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="encryption_Button">
+  <widget class="QPushButton" name="btnEncryption">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>20</x>
      <y>100</y>
-     <width>151</width>
+     <width>241</width>
      <height>40</height>
     </rect>
    </property>
@@ -148,24 +148,27 @@ text-align: center;
 </string>
    </property>
    <property name="text">
-    <string>Encryption</string>
+    <string>Send Stego Mail</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_9">
+  <widget class="QPushButton" name="btnDecryption">
    <property name="geometry">
     <rect>
-     <x>-10</x>
+     <x>0</x>
      <y>260</y>
-     <width>291</width>
+     <width>281</width>
      <height>40</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>16</pointsize>
+     <pointsize>14</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -179,45 +182,15 @@ border: 0.5px solid #000000;
 background-color: rgb(230, 230, 230);</string>
    </property>
    <property name="text">
-    <string>    Decryption</string>
+    <string>  Recieved Stego Mail</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="emailContentButton">
+  <widget class="QPushButton" name="btnStegoContent">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>20</x>
      <y>150</y>
      <width>151</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
-    </font>
-   </property>
-   <property name="autoFillBackground">
-    <bool>false</bool>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color:black;
-box-shadow: none;
-border-style:flat;
-text-align: center;
-</string>
-   </property>
-   <property name="text">
-    <string>Email Content</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="stegoContentButton">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>200</y>
-     <width>141</width>
      <height>31</height>
     </rect>
    </property>
@@ -242,7 +215,37 @@ text-align: center;
     <string>Stego Content</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="EmailStatus_pushButton">
+  <widget class="QPushButton" name="btnEmailContent">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>180</y>
+     <width>141</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:black;
+box-shadow: none;
+border-style:flat;
+text-align: center;
+</string>
+   </property>
+   <property name="text">
+    <string>Email Content</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnEmailStatus">
    <property name="geometry">
     <rect>
      <x>20</x>

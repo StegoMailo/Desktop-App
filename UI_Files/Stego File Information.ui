@@ -61,44 +61,18 @@ border-radius:10px;
 border: 0.5px solid #000000;</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="extractingEmailContent_Button">
+  <widget class="QPushButton" name="btnEncryption">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>670</y>
+     <y>100</y>
      <width>231</width>
      <height>40</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);
-background-color: rgb(231, 231, 231);
-color:black;
-border: 0.5px solid #000000;</string>
-   </property>
-   <property name="text">
-    <string>Extract Email contant</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="encryption_Button">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>100</y>
-     <width>161</width>
-     <height>40</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>16</pointsize>
+     <pointsize>14</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -114,21 +88,21 @@ text-align: center;
 </string>
    </property>
    <property name="text">
-    <string>Encryption</string>
+    <string>Send Stego Mail</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="Decryption_pushButton">
+  <widget class="QPushButton" name="btnDecryption">
    <property name="geometry">
     <rect>
-     <x>-10</x>
+     <x>10</x>
      <y>260</y>
-     <width>291</width>
+     <width>241</width>
      <height>40</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>16</pointsize>
+     <pointsize>14</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -144,14 +118,14 @@ text-align: left;
 </string>
    </property>
    <property name="text">
-    <string>    Decryption</string>
+    <string>Recieved Stego Mail</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="emailContentButton">
+  <widget class="QPushButton" name="btnEmailContent">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>150</y>
+     <x>20</x>
+     <y>200</y>
      <width>141</width>
      <height>31</height>
     </rect>
@@ -177,11 +151,11 @@ text-align: center;
     <string>Email Content</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="stegoContentButton">
+  <widget class="QPushButton" name="btnStegoContent">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>200</y>
+     <x>20</x>
+     <y>150</y>
      <width>141</width>
      <height>31</height>
     </rect>
@@ -207,7 +181,7 @@ text-align: center;
     <string>Stego Content</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_12">
+  <widget class="QPushButton" name="btnEmailStatus">
    <property name="geometry">
     <rect>
      <x>-10</x>
@@ -255,26 +229,13 @@ background-color: rgb(230, 230, 230);</string>
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QPushButton" name="btnExtract">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>250</y>
-     <width>731</width>
-     <height>451</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt;Batman Video&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;i send this for u it's very exciting clip&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;u will be happy after watch it !!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;:/batman/51erIkE+lzL._AC_UF1000,1000_QL80_ (1).jpg&quot;/&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton">
-   <property name="geometry">
-    <rect>
-     <x>650</x>
-     <y>630</y>
-     <width>161</width>
-     <height>41</height>
+     <x>580</x>
+     <y>650</y>
+     <width>301</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="font">
@@ -283,7 +244,163 @@ background-color: rgb(230, 230, 230);</string>
     </font>
    </property>
    <property name="text">
-    <string>Extract</string>
+    <string>Extract Email Contact</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="txtSubject">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>410</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+   </property>
+   <property name="text">
+    <string>Subject:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="txtFrom">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>240</y>
+     <width>71</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+   </property>
+   <property name="text">
+    <string>From:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="txtBody">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>490</y>
+     <width>81</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+   </property>
+   <property name="text">
+    <string>Body:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="txtFileName">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>320</y>
+     <width>131</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+   </property>
+   <property name="text">
+    <string>File Name:</string>
+   </property>
+  </widget>
+  <widget class="QPlainTextEdit" name="taBody">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>490</y>
+     <width>531</width>
+     <height>87</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="tfFrom">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>250</y>
+     <width>531</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="tfFileName">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>320</y>
+     <width>531</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="tfSubject">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>410</y>
+     <width>531</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

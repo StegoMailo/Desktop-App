@@ -183,6 +183,7 @@ class Encryption(QDialog):
         super(Encryption, self).__init__()
         loadUi("Encryption.ui", self)
 
+        self.allWidgets = allWidgets
         self.stackedWidget = allWidgets.widgets
         self.txtCoverBrowse.mousePressEvent = self.browseCoverMedia
         self.txtSecretFileBrowse.mousePressEvent = self.browseSecretFile
@@ -257,30 +258,19 @@ class Encryption(QDialog):
         if len(messageFileName[0]) != 0:
             self.txtMediaName.setText(messageFileName[0][0].split("/")[-1])
 
-    def on_send_stego_file_clicked(self):
-        print("Send Stego File button clicked!")
-
     def goToAdvancedSettings(self):
         self.stackedWidget.setCurrentIndex(8)
         self.stackedWidget.setFixedSize(QSize(670, 601))
 
-    # stegoEmail_Information
-    def goToEmailInformation(self):
-        self.stackedWidget.setCurrentIndex(9)
-        self.stackedWidget.setFixedSize(QSize(1081, 711))
 
-    # Decryption_pushButton
+    def goToEmailInformation(self):
+        self.allWidgets.goToEmailInformation()
+
     def goToDecryption(self):
-        # createacc = Decryption()
-        # self.stackedWidget.addWidget(createacc)
-        # self.stackedWidget.setCurrentIndex(self.stackedWidget.currentIndex() + 1)
-        print("To Decryption")
+        self.allWidgets.goToDecryption()
 
     def goToEmailStatus(self):
-        # createacc = EmailStatus_Decryption()
-        # self.stackedWidget.addWidget(createacc)
-        # self.stackedWidget.setCurrentIndex(self.stackedWidget.currentIndex() + 1)
-        print("To Decryption")
+        self.allWidgets.goToEmailStatus()
 
 
 class AdvancedSettings(QDialog):
@@ -294,15 +284,16 @@ class AdvancedSettings(QDialog):
         self.btnDone.clicked.connect(self.goToEncryption)
 
     def goToEncryption(self):  # get data then     backToEncryptionUI
-        EncryptionKey = self.tfKey.text()
-        seed = self.tfSeed.text()
-        isSoundUsed = self.chkSound.isChecked()
-        saveStegoMedia = self.chkSave.isChecked()
 
-        print(EncryptionKey)
-        print(seed)
-        print(isSoundUsed)
-        print(saveStegoMedia)
+        self.allWidgets.EncryptionKey = self.tfKey.text()
+        self.allWidgets.seed = self.tfSeed.text()
+        self.allWidgets.isSoundUsed = self.chkSound.isChecked()
+        self.allWidgets.saveStegoMedia = self.chkSave.isChecked()
+
+        print(self.allWidgets.EncryptionKey)
+        print(self.allWidgets.seed)
+        print(self.allWidgets.isSoundUsed)
+        print(self.allWidgets.saveStegoMedia)
 
         self.stackedWidget.setCurrentIndex(7)
         self.stackedWidget.setFixedSize(QSize(1223, 685))
@@ -311,7 +302,6 @@ class AdvancedSettings(QDialog):
 class EmailInformation(QDialog):
     stackedWidget: QStackedWidget
 
-
     def __init__(self, allWidgets):
         super(EmailInformation, self).__init__()
         loadUi("Email Information.ui", self)
@@ -319,9 +309,12 @@ class EmailInformation(QDialog):
         self.stackedWidget = allWidgets.widgets
         self.allWidgets = allWidgets
 
-        # self.Decryption_pushButton.clicked.connect(self.on_Decryption_pushButton_clicked)
-        # self.EmailStatusButton.clicked.connect(self.on_EmailStatus_pushButton_clicked)
-        # self.stegoContentButton.clicked.connect(self.on_stegoEmail_Information_clicked)
+
+        self.btnEncryption.clicked.connect(self.goToStegoContent)
+
+        self.btnDecryption.clicked.connect(self.goToDecryption)
+        self.btnEmailStatus.clicked.connect(self.goToEmailStatus)
+        self.btnStegoContent.clicked.connect(self.goToStegoContent)
 
         self.btnSend.clicked.connect(self.sendStegoMail)
 
@@ -375,41 +368,57 @@ class EmailInformation(QDialog):
                     self.allWidgets.widgetsObjects[10].encodeStegoFile()
                     self.stackedWidget.setFixedSize(QSize(600, 400))
 
-    def on_Decryption_pushButton_clicked(self):
-        # createacc = Decryption()
-        # self.stackedWidget.addWidget(createacc)
-        # self.stackedWidget.setCurrentIndex(self.stackedWidget.currentIndex() + 1)
-        print("To Decryption")
+    def goToDecryption(self):
+       self.allWidgets.goToDecryption()
 
-    def on_EmailStatus_pushButton_clicked(self):
-        # createacc = EmailStatus_Decryption()
-        # self.stackedWidget.addWidget(createacc)
-        # self.stackedWidget.setCurrentIndex(self.stackedWidget.currentIndex() + 1)
-        print("To Decryption")
+    def goToEmailStatus(self):
+        self.allWidgets.goToEmailStatus()
 
-        # stegoEmail_Information
-
-    def on_stegoEmail_Information_clicked(self):
-        createacc = Encryption()
-        self.stackedWidget.addWidget(createacc)
-        self.stackedWidget.setCurrentIndex(self.stackedWidget.currentIndex() + 1)
+    def goToStegoContent(self):
+        self.allWidgets.goToStegoContent()
 
 
 class SentEmailStatus(QDialog):
     stackedWidget: QStackedWidget
 
     cancelled = False
+    paused = False
 
     def __init__(self, allWidgets):
         super(SentEmailStatus, self).__init__()
         loadUi("Send Email.ui", self)
 
         self.stackedWidget = allWidgets.widgets
+        self.allWidgets = allWidgets
 
-        self.btnCancel.clicked.connect(self.changeCancelValue)
+        self.btnCancel.clicked.connect(self.cancelStegoMail)
 
-    def changeCancelValue(self):
-        self.cancelled=True
+    def cancelStegoMail(self):
+
+        self.paused = True
+
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Warning)
+
+        msg.setText("Are you sure you want to cancel sending your Stego Mail?\n")
+
+        msg.setWindowTitle("Are you sure you want to cancel?")
+
+        msg.addButton(QMessageBox.Yes)
+        msg.addButton(QMessageBox.No)
+
+        retval = msg.exec_()
+
+        if retval == QMessageBox.Yes:
+            self.cancelled = True
+            self.paused = False
+            self.allWidgets.goToStegoContent()
+        else:
+            self.paused = False
+
+        print(QMessageBox.Yes)
+
+
     def encodeStegoFile(self):
         progress = 0
         t1 = Thread(target=self.count, daemon=True, kwargs={'progress': progress})
@@ -418,6 +427,9 @@ class SentEmailStatus(QDialog):
         self.startTheThread(self)
 
     def startTheThread(self, progress):
+        self.cancelled = False
+        self.paused = False
+
         t = threading.Thread(daemon=True, name='StatusThread', target=testingTreads,
                              args=[self.updateUI, progress])
         t.start()
@@ -439,6 +451,9 @@ def testingTreads(callbackFunc, sentEmail):
 
     progress = 0
     while not sentEmail.cancelled:
+        while sentEmail.paused:
+            continue
         time.sleep(1)
         progress += 1
         mySrc.myGUI_signal.emit(progress)
+    mySrc.myGUI_signal.emit(0)

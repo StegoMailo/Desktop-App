@@ -146,7 +146,7 @@ text-align: center;
     <string>Email Status</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
+  <widget class="QPushButton" name="btnEncryption">
    <property name="geometry">
     <rect>
      <x>-10</x>
@@ -157,7 +157,7 @@ text-align: center;
    </property>
    <property name="font">
     <font>
-     <pointsize>16</pointsize>
+     <pointsize>14</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -200,7 +200,7 @@ text-align: center;
     <string>Email Content</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="stegoContentButton">
+  <widget class="QPushButton" name="btnStegocontent">
    <property name="geometry">
     <rect>
      <x>-10</x>
@@ -306,13 +306,13 @@ background-color: rgb(230, 230, 230);</string>
     <rect>
      <x>10</x>
      <y>240</y>
-     <width>151</width>
+     <width>231</width>
      <height>40</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>16</pointsize>
+     <pointsize>14</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -325,7 +325,7 @@ text-align: center;
 </string>
    </property>
    <property name="text">
-    <string>Decryption</string>
+    <string>Recieved Stego Mail</string>
    </property>
   </widget>
   <widget class="QLabel" name="txtCoverBrowse">

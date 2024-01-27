@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1223</width>
-    <height>762</height>
+    <width>752</width>
+    <height>319</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,40 +19,52 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(248, 248, 248);</string>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="txtTitle">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>260</y>
-     <width>441</width>
+     <x>110</x>
+     <y>40</y>
+     <width>551</width>
      <height>51</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>24</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:24pt; color:#000000;&quot;&gt;Extracting Email Content...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>Extracting Email Content...</string>
    </property>
   </widget>
   <widget class="QProgressBar" name="progressBar">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>370</y>
-     <width>691</width>
-     <height>23</height>
+     <x>50</x>
+     <y>142</y>
+     <width>681</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>24</pointsize>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">color:black;</string>
    </property>
    <property name="value">
-    <number>24</number>
+    <number>0</number>
    </property>
   </widget>
-  <widget class="QPushButton" name="cancel_Button">
+  <widget class="QPushButton" name="btnCancel">
    <property name="geometry">
     <rect>
-     <x>590</x>
-     <y>440</y>
+     <x>330</x>
+     <y>220</y>
      <width>121</width>
      <height>41</height>
     </rect>
@@ -73,7 +85,7 @@ border: 0.5px solid #000000;</string>
   </widget>
  </widget>
  <resources>
-  <include location="C:/Users/ATIYA AMG/Downloads/backgroungImg.qrc"/>
+  <include location="../../../../ATIYA AMG/Downloads/backgroungImg.qrc"/>
  </resources>
  <connections/>
 </ui>

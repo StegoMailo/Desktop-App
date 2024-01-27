@@ -1,8 +1,12 @@
 ##########################################################################################################
+import sys
+import threading
+import time
+
 from PyQt5 import QtGui
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QSize, pyqtSignal, QObject
 from PyQt5.QtWidgets import QDialog, QStackedWidget, QFileDialog, QListWidget, QListWidgetItem, QWidget, QVBoxLayout, \
-    QLabel, QHBoxLayout, QFrame
+    QLabel, QHBoxLayout, QFrame, QMessageBox
 from PyQt5.uic import loadUi
 
 
@@ -24,11 +28,6 @@ class QCustomQWidget(QWidget):
         self.allQVBoxLayout = QVBoxLayout()
         self.allQVBoxLayout.addLayout(self.textQHBoxLayout, 1)
         self.setLayout(self.allQVBoxLayout)
-        # setStyleSheet
-
-
-
-
 
         font = self.txtSubject.font()
 
@@ -36,7 +35,6 @@ class QCustomQWidget(QWidget):
 
         self.txtSubject.setFont(font)
         self.txtSender.setFont(font)
-
 
         self.txtSubject.setStyleSheet('''
             color: rgb(0, 0, 255);
@@ -46,8 +44,6 @@ class QCustomQWidget(QWidget):
             color: rgb(255, 0, 0);
             background-color: rgba(0,0,0,0);
         ''')
-
-
 
     def setSubject(self, text):
         self.txtSubject.setText(text)
@@ -59,11 +55,13 @@ class QCustomQWidget(QWidget):
 
     def getSubjectString(self):
         return self.subject
+
     def getSenderString(self):
         return self.sender
 
 
 class Decryption(QDialog):
+    stegoFile: str
     stackedWidget: QStackedWidget
     testList = [("hi", "Taha"), ("Iloveshwarma", "Izzat"), ("what's up bro", "Fathi")]
 
@@ -71,20 +69,22 @@ class Decryption(QDialog):
         super(Decryption, self).__init__()
         loadUi("Decryption.ui", self)
 
+        self.allWidgets = allWidgets
         self.stackedWidget = allWidgets.widgets
 
-        self.UploadEncryptedMedia_pushButton.clicked.connect(self.choose_file)
-        self.EmailStatus_pushButton.clicked.connect(self.goToEmailFromCustomFile)
-        self.emailContentButton.clicked.connect(self.on_emailContentButton_clicked)
-        self.encryption_Button.clicked.connect(self.on_emailContentButton_clicked)
-        self.stegoContentButton.clicked.connect(self.on_stegoEmail_Information_clicked)
+        self.btnUploadStego.clicked.connect(self.uploadFile)
 
-        #self.lwEmails.itemClicked.connect(self.goToEmailStatusFromList)
+        self.btnEmailStatus.clicked.connect(self.goToEmailStatus)
 
+        self.btnEmailContent.clicked.connect(self.goToEmailContent)
+        self.btnEncryption.clicked.connect(self.goToEncryption)
+        self.btnStegoContent.clicked.connect(self.goToStegoContent)
+
+        # self.lwEmails.itemClicked.connect(self.goToEmailStatusFromList)
 
         self.fillList()
         self.lwEmails.itemClicked.connect(self.goToEmailStatusFromList)
-        #QListWidget.
+        # QListWidget.
 
     def fillList(self):
         for subject, sender in self.testList:
@@ -92,90 +92,171 @@ class Decryption(QDialog):
             customListItem.setSubject(subject)
             customListItem.setSender(sender)
 
-
             myQListWidgetItem = QListWidgetItem(self.lwEmails)
             myQListWidgetItem.setSizeHint(customListItem.sizeHint())
-
 
             self.lwEmails.addItem(myQListWidgetItem)
             self.lwEmails.setItemWidget(myQListWidgetItem, customListItem)
 
+    def goToEmailStatus(self):
+        self.allWidgets.goToEmailStatus()
 
-    def goToEmailFromCustomFile(self):
-        print("hi")
-
-    def goToEmailStatusFromList(self, item:QListWidgetItem):
+    def goToEmailStatusFromList(self, item: QListWidgetItem):
 
         customItem = self.lwEmails.itemWidget(item)
 
-        print(customItem.getSubjectString()+"  "+customItem.getSenderString())
+        print(customItem.getSubjectString() + "  " + customItem.getSenderString())
 
-    def on_emailContentButton_clicked(self):  # go to  Email content UI
-        # create = Encryption()
-        # self.stackedWidget.addWidget(create)
-        # self.stackedWidget.setCurrentIndex( self.stackedWidget.currentIndex() + 1)
-        print("Go To Encryption")
+        self.allWidgets.goToEmailStatusFromList(customItem)
 
-    def on_stegoEmail_Information_clicked(self):
-        # createacc = stegoEmail_Information()
-        # self.stackedWidget.addWidget(createacc)
-        # self.stackedWidget.setCurrentIndex( self.stackedWidget.currentIndex() + 1)
-        print("Go To Encryption")
+    def goToStegoContent(self):  # go to  stego content UI
+        self.allWidgets.goToStegoContent()
 
-    def choose_file(self):
+    def goToEncryption(self):
+        self.allWidgets.goToEncryption()
+
+    def goToEmailContent(self):
+        self.allWidgets.goToEmailInformation()
+
+    def uploadFile(self):
         # Open a file dialog to choose a file
         file_dialog = QFileDialog()
         file_dialog.setFileMode(QFileDialog.ExistingFile)  # Allow selecting an existing file
         file_path, _ = file_dialog.getOpenFileName(self, 'Choose a file', '', 'All Files (*);;Text Files (*.txt)')
 
         if file_path:
+            self.allWidgets.secretFilePath = file_path
+            self.allWidgets.goToEmailStatusFromUpload()
             print(f'Selected File: {file_path}')
 
 
-class EmailStatus_Decryption(QDialog):
+class EmailStatus(QDialog):
     stackedWidget: QStackedWidget
 
-    def __init__(self):
-        super(EmailStatus_Decryption, self).__init__()
-        loadUi("deskTopUI\\EmailStatus_Decryption.ui", self)
-        self.emailContentButton.clicked.connect(self.on_emailContentButton_clicked)
-        self.encryption_Button.clicked.connect(self.on_emailContentButton_clicked)
-        self.Decryption_pushButton.clicked.connect(self.on_Decryption_pushButton_clicked)
-        self.stegoContentButton.clicked.connect(self.on_stegoEmail_Information_clicked)
-        self.extractingEmailContent_Button.clicked.connect(self.on_extractingEmailContent_Button_clicked)
-
-    def on_emailContentButton_clicked(self):  # go to  Email content UI
-        # create = Encryption()
-        # self.stackedWidget.addWidget(create)
-        # self.stackedWidget.setCurrentIndex( self.stackedWidget.currentIndex() + 1)
-        print("Go To Encryption")
-
-    def on_Decryption_pushButton_clicked(self):
-        createacc = Decryption()
-        self.stackedWidget.addWidget(createacc)
-        self.stackedWidget.setCurrentIndex(self.stackedWidget.currentIndex() + 1)
-
-    def on_stegoEmail_Information_clicked(self):
-        # createacc = stegoEmail_Information()
-        # self.stackedWidget.addWidget(createacc)
-        # self.stackedWidget.setCurrentIndex( self.stackedWidget.currentIndex() + 1)
-        print("Go To Encryption")
-
-    def on_extractingEmailContent_Button_clicked(self):
-        createacc = ExtractEmailContent_Decryption()
-        self.stackedWidget.addWidget(createacc)
-        self.stackedWidget.setCurrentIndex(self.stackedWidget.currentIndex() + 1)
+    from_ = "From: "
+    fileName = "File Name:"
+    subject = "Subject:"
 
 
-class ExtractEmailContent_Decryption(QDialog):
+    def __init__(self, allWidgets):
+        super(EmailStatus, self).__init__()
+        loadUi("Stego File Information.ui", self)
+
+        self.allWidgets = allWidgets
+        self.stackedWidget = allWidgets.widgets
+
+        self.btnEncryption.clicked.connect(self.goToEncryption)
+        self.btnStegoContent.clicked.connect(self.goToStegoContent)
+        self.btnEmailContent.clicked.connect(self.goToEmailInformation)
+
+        self.btnDecryption.clicked.connect(self.goToDecryption)
+        self.btnExtract.clicked.connect(self.extractStegoFile)
+
+
+    def goToStegoContent(self):  # go to  Stego content UI
+        self.allWidgets.goToStegoContent()
+
+    def goToEncryption(self):  # go to  Email content UI
+        self.allWidgets.goToEncryption()
+
+    def goToDecryption(self):
+        self.allWidgets.goToDecryption()
+
+    def goToEmailInformation(self):
+        self.allWidgets.goToEmailInformation()
+
+    def extractStegoFile(self):
+        self.stackedWidget.setCurrentIndex(13)
+        self.allWidgets.widgetsObjects[13].encodeStegoFile()
+        self.stackedWidget.setFixedSize(QSize(752, 319))
+
+
+class ExtractStego(QDialog):
     stackedWidget: QStackedWidget
 
-    def __init__(self):
-        super(ExtractEmailContent_Decryption, self).__init__()
-        loadUi("deskTopUI\\ExtractEmailContent_Decryption.ui", self)
-        self.cancel_Button.clicked.connect(self.on_EmailStatus_pushButton_clicked)
+    cancelled = False
+    paused = False
 
-    def on_EmailStatus_pushButton_clicked(self):
-        createacc = EmailStatus_Decryption()
-        self.stackedWidget.addWidget(createacc)
-        self.stackedWidget.setCurrentIndex(self.stackedWidget.currentIndex() + 1)
+    def __init__(self, allWidgets):
+        super(ExtractStego, self).__init__()
+        loadUi("Extracting Stego.ui", self)
+
+        self.stackedWidget = allWidgets.widgets
+        self.allWidgets = allWidgets
+
+        self.btnCancel.clicked.connect(self.cancelStegoMail)
+
+    def cancelStegoMail(self):
+
+        self.paused = True
+
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Warning)
+
+        msg.setText("Are you sure you want to cancel sending your Stego Mail?\n")
+
+        msg.setWindowTitle("Are you sure you want to cancel?")
+
+        msg.addButton(QMessageBox.Yes)
+        msg.addButton(QMessageBox.No)
+
+        retval = msg.exec_()
+
+        if retval == QMessageBox.Yes:
+            self.cancelled = True
+            self.paused = False
+
+            self.allWidgets.goToStegoContent()
+
+
+        else:
+            self.paused = False
+
+        print(QMessageBox.Yes)
+
+    def encodeStegoFile(self):
+        progress = 0
+        t1 = threading.Thread(target=self.count, daemon=True, kwargs={'progress': progress})
+        t1.start()
+
+        self.startTheThread()
+
+    def startTheThread(self):
+        self.cancelled = False
+        self.paused = False
+
+        t = threading.Thread(daemon=True, name='StatusThread', target=testingTreads,
+                             args=[self.updateUI, self])
+        t.start()
+
+    def updateUI(self, progress):
+        print(progress)
+        self.progressBar.setValue(progress)
+
+    def count(self, progress):
+        while not self.cancelled:
+            while self.paused:
+                continue
+            time.sleep(1)
+            progress += 1
+            print("Hi")
+        sys.exit()
+
+
+class Communicate(QObject):
+    myGUI_signal = pyqtSignal(int)
+
+
+def testingTreads(callbackFunc, sentEmail):
+    mySrc = Communicate()
+    mySrc.myGUI_signal.connect(callbackFunc)
+
+    progress = 0
+    while not sentEmail.cancelled:
+        while sentEmail.paused:
+            continue
+        time.sleep(1)
+        progress += 1
+        mySrc.myGUI_signal.emit(progress)
+    mySrc.myGUI_signal.emit(0)
+
