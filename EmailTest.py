@@ -17,6 +17,7 @@ from Steganography.HideInImage import HideInImage
 
 def filePath(fileName):
     return os.path.join(folder_name,fileName)
+
 SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
 creds = flow.run_local_server(port=0)
@@ -25,14 +26,20 @@ service = build('gmail', 'v1', credentials=creds)
 folder_name='TestFiles/'
 mediaName = "./TestFiles/cat.jpg"
 secreteFile = "./TestFiles/largetext.txt"
-outputFileName = "watermarked.png"
+outputFileName = "watermarkTest.png"
 
-key, seed, iv = HideInImage().hideInImage((mediaName), (secreteFile), (f'./{folder_name}'+outputFileName))
+seed, key, iv = HideInImage().hideInImage((mediaName), (secreteFile), (f'./{folder_name}'+outputFileName))
+
+print(seed)
+print(key)
+print(iv)
 
 # Create a MIMEMultipart message
-sendTo = "tahajamal891@gmail.com"
+#sendTo = "guineapigsarecute3748@gmail.com"
+sendTo = "guineapigsarecute3748@gmail.com"
+#sendTo = "tahajamal03@gmail.com"
 subject = 'this is a test message'
-body = 'Stego|'+str(key)+'|'+str(seed)+'|'+str(iv)+'| \n hello there'
+body = 'Stego|'+str(seed)+'|'+str(key)+'|'+str(iv)+'| \n hello there'
 
 message = MIMEMultipart()
 message['to'] = sendTo

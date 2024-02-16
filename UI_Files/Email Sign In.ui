@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>520</width>
-    <height>630</height>
+    <width>524</width>
+    <height>639</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -326,7 +326,7 @@ background-color: rgba(138, 198, 253,0.5);</string>
     <string>Verify Code</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnAbandon">
+  <widget class="QPushButton" name="btnHome">
    <property name="enabled">
     <bool>true</bool>
    </property>
@@ -365,7 +365,7 @@ background-color: rgb(138, 198, 253,0.5);</string>
   <zorder>progessPassword</zorder>
   <zorder>progressPhone</zorder>
   <zorder>btnVerify</zorder>
-  <zorder>btnAbandon</zorder>
+  <zorder>btnHome</zorder>
  </widget>
  <resources/>
  <connections/>

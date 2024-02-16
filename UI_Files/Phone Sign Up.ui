@@ -165,7 +165,7 @@ background-color: rgb(0, 179, 30);</string>
     <string/>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnAbandon">
+  <widget class="QPushButton" name="btnHome">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -184,7 +184,7 @@ background-color: rgb(0, 179, 30);</string>
 background-color: rgb(138, 198, 253,0.5);</string>
    </property>
    <property name="text">
-    <string>Abandon</string>
+    <string>Home</string>
    </property>
   </widget>
   <widget class="QLabel" name="EmailToPassword">
@@ -360,7 +360,7 @@ background-color: rgb(138, 198, 253,0.5);</string>
   <zorder>txtSignUpTitle</zorder>
   <zorder>PasswordToPhone</zorder>
   <zorder>Entry</zorder>
-  <zorder>btnAbandon</zorder>
+  <zorder>btnHome</zorder>
   <zorder>EmailToPassword</zorder>
   <zorder>progessEmail</zorder>
   <zorder>progessPassword</zorder>

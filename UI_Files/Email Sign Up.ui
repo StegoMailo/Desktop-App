@@ -65,7 +65,7 @@ background-color: rgb(138, 198, 253,0.5);</string>
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnAbandon">
+  <widget class="QPushButton" name="btnHome">
    <property name="enabled">
     <bool>true</bool>
    </property>
@@ -87,7 +87,7 @@ background-color: rgb(138, 198, 253,0.5);</string>
 background-color: rgb(138, 198, 253,0.5);</string>
    </property>
    <property name="text">
-    <string>Abandon</string>
+    <string>Home</string>
    </property>
   </widget>
   <widget class="QLabel" name="Entry">
@@ -345,7 +345,7 @@ border: 0.5px solid #000000;</string>
   </widget>
   <zorder>btnNext</zorder>
   <zorder>txtSignUpTitle</zorder>
-  <zorder>btnAbandon</zorder>
+  <zorder>btnHome</zorder>
   <zorder>Entry</zorder>
   <zorder>PasswordToPhone</zorder>
   <zorder>EmailToPassword</zorder>

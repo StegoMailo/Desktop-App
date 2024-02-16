@@ -7,10 +7,10 @@ from Steganography.HideInVideo import HideInVideo
 import time
 
 start = time.time()
-seed, key, iv = HideInVideo().hideInVideo("Goku Super Saiyan.mp4", "Goku Super Saiyan.mp4", True)
+#seed, key, iv = HideInVideo().hideInVideo("Goku Super Saiyan.mp4", "Goku Super Saiyan.mp4", True)
 
-print("Finished Hiding")
-ExtractFromVideo().extractFromVideo('./tempFiles/finalVideoWithAudio.avi', seed, key, iv)
+#print("Finished Hiding")
+#ExtractFromVideo().extractFromVideo('./tempFiles/finalVideoWithAudio.avi', seed, key, iv)
 
 # email = "guineapigsarecute3748@gmail.com"
 
@@ -38,12 +38,12 @@ ExtractFromVideo().extractFromVideo('./tempFiles/finalVideoWithAudio.avi', seed,
 # data = r.json()
 # print(data[0]['privateKey'])
 
-# seed, key,iv = HideInImage().hideInImage('cat.jpg','largetext.txt',"watermarked.png")
-# print("Finished Hiding")
-# if not os.path.exists("./Extracted Files"):
-#     os.makedirs("Extracted Files")
-#
-# ExtractFromImage().extractFromImage("watermarked.png","./Extracted Files/",seed, key, iv)
+seed, key,iv = HideInImage().hideInImage('cat.jpg','largetext.txt',"watermarked2.png")
+print("Finished Hiding")
+if not os.path.exists("./Extracted Files"):
+    os.makedirs("Extracted Files")
+
+ExtractFromImage().extractFromImage("watermarked2.png","./Extracted Files/",seed, key, iv)
 
 print("Finished")
 end = time.time()

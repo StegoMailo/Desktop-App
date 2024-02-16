@@ -188,7 +188,4 @@ allWidgets.widgets.setFixedHeight(630)
 
 allWidgets.widgets.show()
 
-allWidgets.widgets.setCurrentIndex(7)
-allWidgets.widgets.setFixedSize(QSize(1223, 685))
-
 app.exec_()

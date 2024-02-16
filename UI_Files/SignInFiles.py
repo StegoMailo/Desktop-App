@@ -15,7 +15,7 @@ class EmailSignIn(QDialog):
 
         self.btnNext.clicked.connect(self.goToPhoneNumber)
 
-        self.btnAbandon.clicked.connect(allWidgets.abandonSignIn)
+        self.btnHome.clicked.connect(allWidgets.abandonSignIn)
 
         self.btnSendCode.clicked.connect(self.SendVerificationCode)
 
@@ -77,7 +77,7 @@ class PasswordSignIn(QDialog):
 
         self.tfPassword.setEchoMode(QtWidgets.QLineEdit.Password)
 
-        self.btnAbandon.clicked.connect(allWidgets.abandonSignIn)
+        self.btnHome.clicked.connect(allWidgets.abandonSignIn)
 
         self.btnVerifyPassword.clicked.connect(self.verifyPassword)
 
@@ -109,7 +109,7 @@ class PhoneSignIn(QDialog):
         loadUi('Phone Sign In.ui', self)
         self.widgets = allWidgets.widgets
 
-        self.btnAbandon.clicked.connect(allWidgets.abandonSignIn)
+        self.btnHome.clicked.connect(allWidgets.abandonSignIn)
 
         self.btnSignIn.clicked.connect(self.signIn)
 
