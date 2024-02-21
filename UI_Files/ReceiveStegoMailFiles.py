@@ -156,7 +156,7 @@ class EmailStatus(QDialog):
     def goToStegoContent(self):  # go to  Stego content UI
         self.allWidgets.goToStegoContent()
 
-    def goToEncryption(self):  # go to  Email content UI
+    def goToEncryption(self):  # go to  Gmail content UI
         self.allWidgets.goToEncryption()
 
     def goToDecryption(self):

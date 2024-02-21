@@ -4,10 +4,11 @@ from PyQt5 import QtWidgets
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QApplication, QStackedWidget, QDialog
 from PyQt5.uic import loadUi
+resources = exec(open("./Designer Resource Files/resources.py","r").read())
 
 from UI_Files.ReceiveStegoMailFiles import Decryption, EmailStatus, ExtractStego
 from UI_Files.SendStegoMailFiles import Encryption, AdvancedSettings, EmailInformation, SentEmailStatus
-from UI_Files.SignInFiles import PasswordSignIn, PhoneSignIn, EmailSignIn
+from UI_Files.SignInFiles import EmailSignIn, QRSignIn, PINSignIn
 from UI_Files.SignUpFiles import EmailSignUp, PasswordSignUp, PhoneSignUp
 
 
@@ -29,6 +30,8 @@ class allWidgets():
     widgets: QStackedWidget
     widgetsObjects = []
 
+    currentEmail:str
+
     encryptionKey:str
     seed:str
     isSoundUsed:bool
@@ -45,12 +48,12 @@ class allWidgets():
 
         allWidgets.widgets.removeWidget(allWidgets.widgetsObjects[3])
         allWidgets.widgetsObjects[3].close()
-        allWidgets.widgetsObjects[3] = PhoneSignIn(allWidgets)
+        allWidgets.widgetsObjects[3] = QRSignIn(allWidgets)
         allWidgets.widgets.insertWidget(3, allWidgets.widgetsObjects[3])
 
         allWidgets.widgets.removeWidget(allWidgets.widgetsObjects[2])
         allWidgets.widgetsObjects[2].close()
-        allWidgets.widgetsObjects[2] = PasswordSignIn(allWidgets)
+        allWidgets.widgetsObjects[2] = PINSignIn(allWidgets)
         allWidgets.widgets.insertWidget(2, allWidgets.widgetsObjects[2])
 
         allWidgets.widgets.removeWidget(allWidgets.widgetsObjects[1])
@@ -135,13 +138,13 @@ emailSignIn = EmailSignIn(allWidgets)
 allWidgets.widgetsObjects.append(emailSignIn)
 allWidgets.widgets.addWidget(emailSignIn)  # index 1
 
-passwordSignIn = PasswordSignIn(allWidgets)
-allWidgets.widgetsObjects.append(passwordSignIn)
-allWidgets.widgets.addWidget(passwordSignIn)  # index 2
-
-phoneNumberSignIn = PhoneSignIn(allWidgets)
+phoneNumberSignIn = QRSignIn(allWidgets)
 allWidgets.widgetsObjects.append(phoneNumberSignIn)
-allWidgets.widgets.addWidget(phoneNumberSignIn)  # index 3
+allWidgets.widgets.addWidget(phoneNumberSignIn)  # index 2
+
+passwordSignIn = PINSignIn(allWidgets)
+allWidgets.widgetsObjects.append(passwordSignIn)
+allWidgets.widgets.addWidget(passwordSignIn)  # index 3
 
 emailSignUp = EmailSignUp(allWidgets)
 allWidgets.widgetsObjects.append(emailSignUp)
@@ -185,6 +188,8 @@ allWidgets.widgets.addWidget(extractStego)#index 13
 
 allWidgets.widgets.setFixedWidth(520)
 allWidgets.widgets.setFixedHeight(630)
+
+allWidgets.widgets.setCurrentIndex((0))
 
 allWidgets.widgets.show()
 

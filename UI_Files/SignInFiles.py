@@ -1,7 +1,34 @@
+import re
+import threading
+
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import QSize
-from PyQt5.QtWidgets import QDialog, QStackedWidget, QMessageBox
+from PyQt5.QtCore import QSize, Qt, pyqtSignal, QObject
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QDialog, QStackedWidget, QMessageBox, QLabel
 from PyQt5.uic import loadUi
+
+from Gmail import AuthenticateEmail
+from Gmail.AuthenticateEmail import authenticateUser
+
+
+class DraggableFilesQLabelQR(QLabel):
+    QRFilePath = ""
+    def __init__(self, widget):
+        super(DraggableFilesQLabelQR, self).__init__(widget)
+
+        self.setAcceptDrops(True)
+
+    def dragEnterEvent(self, event):
+        event.acceptProposedAction()
+
+    def dropEvent(self, event):
+        file_path = event.mimeData().text()
+        file_path = re.sub('file:///', '', file_path)
+        self.QRFilePath = file_path
+
+        self.setPixmap(QPixmap(self.QRFilePath))
+        self.setScaledContents(True)
+
 
 
 
@@ -13,83 +40,97 @@ class EmailSignIn(QDialog):
 
         self.widgets = allWidgets.widgets
 
-        self.btnNext.clicked.connect(self.goToPhoneNumber)
+        self.btnGmail.clicked.connect(self.LogInToGmail)
+        self.btnNext.clicked.connect(self.goToQR)
 
         self.btnHome.clicked.connect(allWidgets.abandonSignIn)
 
-        self.btnSendCode.clicked.connect(self.SendVerificationCode)
-
-        self.btnVerify.clicked.connect(self.VerifyCode)
-
-        self.txtSignInEmailVerification.setHidden(True)
-        self.tfVerificationCode.setHidden(True)
-
-        self.btnVerify.setHidden(True)
-
-        self.btnNext.setHidden(True)
-
-    def SendVerificationCode(self):
-
-        codeToSend = "1232131" #generate Code
-        print("Code Sent Is: "+codeToSend)
-
-        self.btnSendCode.setHidden(True)
-        self.txtSignInEmailVerification.setHidden(False)
-        self.tfVerificationCode.setHidden(False)
-        self.btnVerify.setHidden(False)
-
-    def VerifyCode(self):
-        verification = self.tfVerificationCode.text()
-        codeToSend=""
-        if verification == codeToSend:
-            print("Verified")
-        else:
-            msg = QMessageBox()
-            msg.setIcon(QMessageBox.Warning)
-
-            msg.setText("Shawarma!")
-
-            msg.setWindowTitle("Invalid Key")
-
-            msg.setStandardButtons(QMessageBox.Ok)
-            retval = msg.exec_()
 
 
+    def LogInToGmail(self):
 
-        print("Verification code sent as: " + verification)
+        authenticateUser()
 
-        self.btnSendCode.setHidden(False)
-        self.btnNext.setHidden(False)
+        if AuthenticateEmail.currentEmail != "":
+            self.txtLoggedEmail.setText("Welcome\n" + AuthenticateEmail.currentEmail)
 
-    def goToPhoneNumber(self):
+    def encodeStegoFile(self):
+        progress = 0
+        t1 = threading.Thread(target=self.count, daemon=True, kwargs={'progress': progress})
+        t1.start()
+
+        self.startTheThread(self)
+    def goToQR(self):
         self.widgets.setCurrentIndex(2)
 
+    def startTheThread(self, progress):
+        self.cancelled = False
+        self.paused = False
+
+        t = threading.Thread(daemon=True, name='StatusThread', target=testingTreads,
+                             args=[self.updateUI, progress])
+        t.start()
+
+    def updateUI(self, progress):
+        self.progressBar.setValue(progress)
+
+    def count(self, progress):
+        progress += 1
 
 
 
+class Communicate(QObject):
+    myGUI_signal = pyqtSignal(int)
 
-class PasswordSignIn(QDialog):
+
+def testingTreads(callbackFunc, sentEmail):
+    mySrc = Communicate()
+    mySrc.myGUI_signal.connect(callbackFunc)
+
+    progress = 0
+    while not sentEmail.cancelled:
+        while sentEmail.paused:
+            continue
+
+        progress += 1
+        mySrc.myGUI_signal.emit(progress)
+        
+    mySrc.myGUI_signal.emit(0)
+
+class QRSignIn(QDialog):
     widgets:QStackedWidget
     def __init__(self,allWidgets):
-        super(PasswordSignIn, self).__init__()
-        loadUi('Password Sign In.ui', self)
+        super(QRSignIn, self).__init__()
+        loadUi('QR Sign In.ui', self)
         self.widgets = allWidgets.widgets
 
-        self.tfPassword.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.txtQR = DraggableFilesQLabelQR(self)
+
+        self.txtQR.setStyleSheet(
+            "background-color: rgba(138, 198, 253,0.5);   border-radius:10px; border: 0.5px solid #000000;"
+            " color: rgb(0,0,0);")
+
+
+        self.txtQR.setGeometry(140, 280, 251, 221)
+        self.txtQR.setText("Drop Your\nQR Code Here")
+
+        tempFont = self.txtQR.font()
+        tempFont.setBold(False)
+        tempFont.setPointSize(16)
+        self.txtQR.setFont(tempFont)
+
+        self.txtQR.setAlignment(Qt.AlignHCenter| Qt.AlignVCenter)
+
 
         self.btnHome.clicked.connect(allWidgets.abandonSignIn)
-
-        self.btnVerifyPassword.clicked.connect(self.verifyPassword)
 
         self.btnBack.clicked.connect(self.backToEmail)
         self.btnNext.clicked.connect(self.goToPhoneNumber)
 
         self.btnNext.setHidden(True)
 
-    def verifyPassword(self):
-        password = self.tfPassword.text()
-        print("Your Password Is:" + password)
-        self.btnNext.setHidden(False)
+    def verifyQR(self):
+        print("Your QR Data:")
 
     def backToEmail(self):
         self.widgets.setCurrentIndex(1)
@@ -101,23 +142,17 @@ class PasswordSignIn(QDialog):
 
 
 
-class PhoneSignIn(QDialog):
+class PINSignIn(QDialog):
     widgets: QStackedWidget
 
     def __init__(self,allWidgets):
-        super(PhoneSignIn, self).__init__()
-        loadUi('Phone Sign In.ui', self)
+        super(PINSignIn, self).__init__()
+        loadUi('PIN Sign In.ui', self)
         self.widgets = allWidgets.widgets
 
+
+
         self.btnHome.clicked.connect(allWidgets.abandonSignIn)
-
-        self.btnSignIn.clicked.connect(self.signIn)
-
-        self.btnSendCode.clicked.connect(self.sendVerifcationCode)
-
-        self.btnVerifyCode.clicked.connect(self.verifyCode)
-
-        self.btnSignIn.setHidden(True)
 
         self.btnBack.clicked.connect(self.backToPassword)
 

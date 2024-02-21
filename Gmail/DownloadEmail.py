@@ -10,7 +10,7 @@ from googleapiclient.discovery import build
 import logging
 import requests
 from bs4 import BeautifulSoup
-from Email import AuthenticateEmail
+from Gmail import AuthenticateEmail
 
 
 stegoMail = []
@@ -45,7 +45,7 @@ def getAllStegoMail():
                 payload = txt['payload']
                 headers = payload['headers']
 
-                # Look for Subject and Sender Email in the headers
+                # Look for Subject and Sender Gmail in the headers
                 sender = ""
                 subject = ""
 

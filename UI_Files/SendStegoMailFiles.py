@@ -14,7 +14,7 @@ from PyQt5.QtWidgets import QDialog, QFileDialog, QLabel, QStackedWidget, QMessa
 from PyQt5.uic import loadUi
 
 
-# Encryption Ui : it has three interfaces (Main Encrypting , Advanced Settings ,Email Content)
+# Encryption Ui : it has three interfaces (Main Encrypting , Advanced Settings ,Gmail Content)
 
 class DraggableFilesQLabelSecretFile(QLabel):
     filePath = ""
@@ -318,7 +318,7 @@ class EmailInformation(QDialog):
 
         self.btnSend.clicked.connect(self.sendStegoMail)
 
-    def sendStegoMail(self):  # send the Email content then backToEncryptionUI
+    def sendStegoMail(self):  # send the Gmail content then backToEncryptionUI
         receiver = self.tfTo.text()
         emailSubject = self.tfSubject.text()
         bodyEmail = self.tfBody.toPlainText()
@@ -330,7 +330,7 @@ class EmailInformation(QDialog):
             msg.setText(
                 "The email's address is empty!\nPlease enter an email address for this email.")
 
-            msg.setWindowTitle("Empty Email!")
+            msg.setWindowTitle("Empty Gmail!")
 
             msg.setStandardButtons(QMessageBox.Ok)
             retval = msg.exec_()
@@ -342,7 +342,7 @@ class EmailInformation(QDialog):
                 msg.setText(
                     "The email you have entered is invalid!\nPlease enter a valid email address.")
 
-                msg.setWindowTitle("Invalid Email!")
+                msg.setWindowTitle("Invalid Gmail!")
 
                 msg.setStandardButtons(QMessageBox.Ok)
                 retval = msg.exec_()
