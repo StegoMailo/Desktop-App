@@ -4,6 +4,9 @@ from PyQt5 import QtWidgets
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QApplication, QStackedWidget, QDialog
 from PyQt5.uic import loadUi
+
+from Gmail import AuthenticateEmail
+
 resources = exec(open("./Designer Resource Files/resources.py","r").read())
 
 from UI_Files.ReceiveStegoMailFiles import Decryption, EmailStatus, ExtractStego
@@ -44,6 +47,7 @@ class allWidgets():
 
     @staticmethod
     def abandonSignIn():
+
         allWidgets.widgets.setCurrentIndex(0)
 
         allWidgets.widgets.removeWidget(allWidgets.widgetsObjects[3])
@@ -138,9 +142,9 @@ emailSignIn = EmailSignIn(allWidgets)
 allWidgets.widgetsObjects.append(emailSignIn)
 allWidgets.widgets.addWidget(emailSignIn)  # index 1
 
-phoneNumberSignIn = QRSignIn(allWidgets)
-allWidgets.widgetsObjects.append(phoneNumberSignIn)
-allWidgets.widgets.addWidget(phoneNumberSignIn)  # index 2
+QrSignIn = QRSignIn(allWidgets)
+allWidgets.widgetsObjects.append(QrSignIn)
+allWidgets.widgets.addWidget(QrSignIn)  # index 2
 
 passwordSignIn = PINSignIn(allWidgets)
 allWidgets.widgetsObjects.append(passwordSignIn)

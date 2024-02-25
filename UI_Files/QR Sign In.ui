@@ -256,7 +256,7 @@ background-color: rgb(138, 198, 253,0.5);</string>
 background-color: rgb(138, 198, 253,0.5);</string>
    </property>
    <property name="text">
-    <string>Home</string>
+    <string>Cancel</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btnBrowse">

@@ -240,14 +240,14 @@ background-color: rgba(138, 198, 253,1);</string>
 background-color: rgb(138, 198, 253,0.5);</string>
    </property>
    <property name="text">
-    <string>Home</string>
+    <string>Cancel</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btnGmail">
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>300</y>
+     <y>290</y>
      <width>261</width>
      <height>151</height>
     </rect>
@@ -302,9 +302,9 @@ border: 6px solid rgb(0,0,0);
   <widget class="QLabel" name="txtLoggedEmail">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>460</y>
-     <width>311</width>
+     <x>20</x>
+     <y>450</y>
+     <width>481</width>
      <height>91</height>
     </rect>
    </property>

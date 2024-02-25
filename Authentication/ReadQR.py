@@ -6,4 +6,6 @@ from pyzbar.pyzbar import decode
 #https://note.nkmk.me/en/python-pyzbar-barcode-qrcode/
 def decodeQR(qrPath:str):
     data = decode(Image.open(qrPath))
+    if(len(data)==0):
+        return None
     return data[0].data.decode('utf-8')

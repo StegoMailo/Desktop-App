@@ -1,13 +1,9 @@
 import os.path
-from email import errors
 
-import httplib2
 import requests
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/gmail.send', 'https://www.googleapis.com/auth/gmail.readonly',
@@ -23,10 +19,11 @@ os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
 # The file token.json stores the user's access and refresh tokens, and is
 # created automatically when the authorization flow completes for the first
 # time.
+authenticated = False
 
 def authenticateUser():
 
-    global creds, currentEmail
+    global creds, currentEmail, authenticated
 
 
     if os.path.exists("../Gmail/token.json"):
@@ -56,6 +53,7 @@ def authenticateUser():
     response = requests.get(url=URL)
 
     currentEmail = response.json()['email']
+    authenticated=True
 
     # Test to see if the API is working
 
