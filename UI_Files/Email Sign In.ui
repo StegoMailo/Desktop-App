@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>524</width>
-    <height>639</height>
+    <height>640</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,9 +22,9 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>570</y>
-     <width>131</width>
+     <x>390</x>
+     <y>580</y>
+     <width>121</width>
      <height>41</height>
     </rect>
    </property>
@@ -45,7 +45,7 @@ background-color: rgba(138, 198, 253,0.5);</string>
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>200</y>
+     <y>0</y>
      <width>270</width>
      <height>71</height>
     </rect>
@@ -62,160 +62,10 @@ background-color: rgba(138, 198, 253,0.5);</string>
     <string/>
    </property>
    <property name="text">
-    <string>Sign In</string>
+    <string>Log In</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="progessEmail">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>60</y>
-     <width>111</width>
-     <height>111</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">  height: 50px;
-  width: 50px;
-
-  border-radius: 55%;
-
-border: 2px solid black;
-background-color: rgba(138, 198, 253,1);</string>
-   </property>
-   <property name="text">
-    <string>Email</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="progessPassword">
-   <property name="geometry">
-    <rect>
-     <x>210</x>
-     <y>60</y>
-     <width>111</width>
-     <height>111</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">  height: 50px;
-  width: 50px;
-  background-color: rgb(255, 255, 255);
-border: 2px solid rgb(0, 0, 0);
-  border-radius: 55%;</string>
-   </property>
-   <property name="text">
-    <string>QR</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="progressPhone">
-   <property name="geometry">
-    <rect>
-     <x>370</x>
-     <y>60</y>
-     <width>111</width>
-     <height>111</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">  height: 50px;
-  width: 50px;
-  background-color: rgb(255, 255, 255);
-border: 2px solid rgb(0, 0, 0);
-  border-radius: 55%;</string>
-   </property>
-   <property name="text">
-    <string>PIN</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="EmailToPassword">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>110</y>
-     <width>101</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border: 2px solid rgb(0, 0, 0);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="PasswordToPhone">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>110</y>
-     <width>101</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border: 2px solid rgb(0, 0, 0);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="Entry">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>110</y>
-     <width>101</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border: 2px solid black;
-background-color: rgba(138, 198, 253,1);</string>
-   </property>
-   <property name="text">
-    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="btnHome">
@@ -305,7 +155,7 @@ border: 6px solid rgb(0,0,0);
      <x>20</x>
      <y>450</y>
      <width>481</width>
-     <height>91</height>
+     <height>111</height>
     </rect>
    </property>
    <property name="font">
@@ -319,18 +169,190 @@ border: 6px solid rgb(0,0,0);
    <property name="alignment">
     <set>Qt::AlignCenter</set>
    </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
   </widget>
-  <zorder>Entry</zorder>
-  <zorder>PasswordToPhone</zorder>
+  <widget class="QLabel" name="Entry">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>140</y>
+     <width>51</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border: 2px solid black;
+background-color: rgba(138, 198, 253,1);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="progessEmail">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>90</y>
+     <width>111</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">  height: 50px;
+  width: 50px;
+
+  border-radius: 55%;
+
+border: 2px solid black;
+background-color: rgba(138, 198, 253,1);</string>
+   </property>
+   <property name="text">
+    <string>Email</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="PasswordToPhone">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>140</y>
+     <width>101</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border: 2px solid rgb(0, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="progressPhone">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>90</y>
+     <width>111</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">  height: 50px;
+  width: 50px;
+  background-color: rgb(255, 255, 255);
+border: 2px solid rgb(0, 0, 0);
+  border-radius: 55%;</string>
+   </property>
+   <property name="text">
+    <string>PIN</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="progessPassword">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>90</y>
+     <width>111</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">  height: 50px;
+  width: 50px;
+  background-color: rgb(255, 255, 255);
+border: 2px solid rgb(0, 0, 0);
+  border-radius: 55%;</string>
+   </property>
+   <property name="text">
+    <string>QR</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="EmailToPassword">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>140</y>
+     <width>101</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border: 2px solid rgb(0, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="txtGmail">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>230</y>
+     <width>431</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Click the button to log in with your Gmail:</string>
+   </property>
+  </widget>
   <zorder>EmailToPassword</zorder>
   <zorder>btnNext</zorder>
   <zorder>txtSignInTitle</zorder>
-  <zorder>progessEmail</zorder>
-  <zorder>progessPassword</zorder>
-  <zorder>progressPhone</zorder>
   <zorder>btnHome</zorder>
   <zorder>btnGmail</zorder>
   <zorder>txtLoggedEmail</zorder>
+  <zorder>Entry</zorder>
+  <zorder>progessEmail</zorder>
+  <zorder>PasswordToPhone</zorder>
+  <zorder>progressPhone</zorder>
+  <zorder>progessPassword</zorder>
+  <zorder>txtGmail</zorder>
  </widget>
  <resources>
   <include location="Designer Resource Files/BackGroundImages.qrc"/>

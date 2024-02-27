@@ -19,13 +19,13 @@ os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
 # The file token.json stores the user's access and refresh tokens, and is
 # created automatically when the authorization flow completes for the first
 # time.
-authenticated = False
+authenticated = False #as in authentication flow
 
 def authenticateUser():
 
     global creds, currentEmail, authenticated
 
-
+    creds=None
     if os.path.exists("../Gmail/token.json"):
         creds = Credentials.from_authorized_user_file("../Gmail/token.json", SCOPES)
     # If there are no (valid) credentials available, let the user log in.

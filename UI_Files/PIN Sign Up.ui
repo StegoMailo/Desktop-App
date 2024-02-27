@@ -16,7 +16,7 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(248, 248, 248);</string>
   </property>
-  <widget class="QPushButton" name="btnSignIn">
+  <widget class="QPushButton" name="btnSignUp">
    <property name="geometry">
     <rect>
      <x>390</x>
@@ -35,13 +35,13 @@
 background-color: rgb(138, 198, 253,0.5);</string>
    </property>
    <property name="text">
-    <string>Log In</string>
+    <string> Sign Up</string>
    </property>
   </widget>
   <widget class="QLabel" name="txtSignInTitle">
    <property name="geometry">
     <rect>
-     <x>140</x>
+     <x>150</x>
      <y>0</y>
      <width>270</width>
      <height>71</height>
@@ -53,7 +53,7 @@ background-color: rgb(138, 198, 253,0.5);</string>
     </font>
    </property>
    <property name="text">
-    <string>Log In</string>
+    <string>Sign Up</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -103,62 +103,10 @@ background-color: rgb(138, 198, 253,0.5);</string>
     <string>Back</string>
    </property>
   </widget>
-  <widget class="QLabel" name="progessPassword">
-   <property name="geometry">
-    <rect>
-     <x>210</x>
-     <y>90</y>
-     <width>111</width>
-     <height>111</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">  height: 50px;
-  width: 50px;
-
-  border-radius: 55%;
-
-border: 2px solid black;
-background-color: rgba(138, 198, 253,1);</string>
-   </property>
-   <property name="text">
-    <string>QR</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="EmailToPassword">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>140</y>
-     <width>101</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border: 2px solid black;
-background-color: rgba(138, 198, 253,1);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QLabel" name="progessEmail">
    <property name="geometry">
     <rect>
-     <x>50</x>
+     <x>60</x>
      <y>90</y>
      <width>111</width>
      <height>111</height>
@@ -193,7 +141,7 @@ background-color: rgba(138, 198, 253,1);</string>
    </property>
    <property name="geometry">
     <rect>
-     <x>290</x>
+     <x>300</x>
      <y>140</y>
      <width>101</width>
      <height>16</height>
@@ -207,10 +155,65 @@ background-color: rgba(138, 198, 253,1);</string>
     <string/>
    </property>
   </widget>
+  <widget class="QLabel" name="Entry">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>140</y>
+     <width>101</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+
+
+border: 2px solid black;
+background-color: rgba(138, 198, 253,1);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="progessPassword">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>90</y>
+     <width>111</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">  height: 50px;
+  width: 50px;
+
+  border-radius: 55%;
+
+border: 2px solid black;
+background-color: rgba(138, 198, 253,1);</string>
+   </property>
+   <property name="text">
+    <string>QR</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
   <widget class="QLabel" name="progressPhone">
    <property name="geometry">
     <rect>
-     <x>370</x>
+     <x>380</x>
      <y>90</y>
      <width>111</width>
      <height>111</height>
@@ -239,27 +242,78 @@ background-color: rgba(138, 198, 253,1);</string>
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="Entry">
+  <widget class="QLabel" name="EmailToPassword">
    <property name="enabled">
     <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>140</x>
      <y>140</y>
      <width>101</width>
      <height>16</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">
-
-
-border: 2px solid black;
+    <string notr="true">border: 2px solid black;
 background-color: rgba(138, 198, 253,1);</string>
    </property>
    <property name="text">
     <string/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="tfPin4">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>280</y>
+     <width>113</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>64</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(220, 220, 220);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="maxLength">
+    <number>1</number>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="tfPin3">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>280</y>
+     <width>113</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>64</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(220, 220, 220);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="maxLength">
+    <number>1</number>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
   <widget class="QLineEdit" name="tfPin1">
@@ -316,92 +370,40 @@ background-color: rgba(138, 198, 253,1);</string>
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="tfPin3">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>280</y>
-     <width>113</width>
-     <height>151</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>64</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(220, 220, 220);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="maxLength">
-    <number>1</number>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="tfPin4">
-   <property name="geometry">
-    <rect>
-     <x>400</x>
-     <y>280</y>
-     <width>113</width>
-     <height>151</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>64</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(220, 220, 220);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="maxLength">
-    <number>1</number>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
   <widget class="QLabel" name="txtPINInfo">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>220</y>
-     <width>301</width>
-     <height>31</height>
+     <y>230</y>
+     <width>311</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>12</pointsize>
+     <pointsize>10</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
     </font>
    </property>
    <property name="text">
-    <string>Enter your PIN to log in:</string>
+    <string>Create a PIN for your account:</string>
    </property>
   </widget>
-  <zorder>btnSignIn</zorder>
+  <zorder>btnSignUp</zorder>
   <zorder>txtSignInTitle</zorder>
   <zorder>btnHome</zorder>
   <zorder>btnBack</zorder>
-  <zorder>EmailToPassword</zorder>
   <zorder>PasswordToPhone</zorder>
-  <zorder>progressPhone</zorder>
   <zorder>Entry</zorder>
-  <zorder>progessPassword</zorder>
+  <zorder>progressPhone</zorder>
+  <zorder>EmailToPassword</zorder>
   <zorder>progessEmail</zorder>
+  <zorder>progessPassword</zorder>
+  <zorder>tfPin4</zorder>
+  <zorder>tfPin3</zorder>
   <zorder>tfPin1</zorder>
   <zorder>tfPin2</zorder>
-  <zorder>tfPin3</zorder>
-  <zorder>tfPin4</zorder>
   <zorder>txtPINInfo</zorder>
  </widget>
  <resources/>

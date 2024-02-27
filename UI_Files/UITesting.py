@@ -1,6 +1,6 @@
 import sys
 
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QApplication, QStackedWidget, QDialog
 from PyQt5.uic import loadUi
@@ -12,7 +12,7 @@ resources = exec(open("./Designer Resource Files/resources.py","r").read())
 from UI_Files.ReceiveStegoMailFiles import Decryption, EmailStatus, ExtractStego
 from UI_Files.SendStegoMailFiles import Encryption, AdvancedSettings, EmailInformation, SentEmailStatus
 from UI_Files.SignInFiles import EmailSignIn, QRSignIn, PINSignIn
-from UI_Files.SignUpFiles import EmailSignUp, PasswordSignUp, PhoneSignUp
+from UI_Files.SignUpFiles import EmailSignUp, QRSignUp, PINSignUp
 
 
 class WelcomeScreen(QDialog):
@@ -35,6 +35,21 @@ class allWidgets():
 
     currentEmail:str
 
+    emailSignUp = ""
+    QRSignUpDirectory= ""
+    PINSignUp= ""
+
+    emailSignIn = ""
+    QRSignInDirectory= ""
+    PINSignIn= ""
+
+    emailSignInValid = False
+    QRSignInValid = False
+    PINSignInValid = False
+
+    emailSignUpValid = False
+
+
     encryptionKey:str
     seed:str
     isSoundUsed:bool
@@ -47,17 +62,25 @@ class allWidgets():
 
     @staticmethod
     def abandonSignIn():
+        allWidgets.emailSignIn = ""
+        allWidgets.QRSignInDirectory = ""
+        allWidgets.PINSignIn = ""
+
+        allWidgets.emailSignInValid = False
+        allWidgets.QRSignInValid = False
+        allWidgets.PINSignInValid = False
+
 
         allWidgets.widgets.setCurrentIndex(0)
 
         allWidgets.widgets.removeWidget(allWidgets.widgetsObjects[3])
         allWidgets.widgetsObjects[3].close()
-        allWidgets.widgetsObjects[3] = QRSignIn(allWidgets)
+        allWidgets.widgetsObjects[3] = PINSignIn(allWidgets)
         allWidgets.widgets.insertWidget(3, allWidgets.widgetsObjects[3])
 
         allWidgets.widgets.removeWidget(allWidgets.widgetsObjects[2])
         allWidgets.widgetsObjects[2].close()
-        allWidgets.widgetsObjects[2] = PINSignIn(allWidgets)
+        allWidgets.widgetsObjects[2] = QRSignIn(allWidgets)
         allWidgets.widgets.insertWidget(2, allWidgets.widgetsObjects[2])
 
         allWidgets.widgets.removeWidget(allWidgets.widgetsObjects[1])
@@ -71,12 +94,12 @@ class allWidgets():
 
         allWidgets.widgets.removeWidget(allWidgets.widgetsObjects[6])
         allWidgets.widgetsObjects[6].close()
-        allWidgets.widgetsObjects[6] = PhoneSignUp(allWidgets)
+        allWidgets.widgetsObjects[6] = PINSignUp(allWidgets)
         allWidgets.widgets.insertWidget(6, allWidgets.widgetsObjects[6])
 
         allWidgets.widgets.removeWidget(allWidgets.widgetsObjects[5])
         allWidgets.widgetsObjects[5].close()
-        allWidgets.widgetsObjects[5] = PasswordSignUp(allWidgets)
+        allWidgets.widgetsObjects[5] = QRSignUp(allWidgets)
         allWidgets.widgets.insertWidget(5, allWidgets.widgetsObjects[5])
 
         allWidgets.widgets.removeWidget(allWidgets.widgetsObjects[4])
@@ -133,6 +156,8 @@ class allWidgets():
 app = QApplication(sys.argv)
 
 allWidgets.widgets = QtWidgets.QStackedWidget()
+allWidgets.widgets.setWindowTitle("StegoMailo")
+allWidgets.widgets.setWindowIcon(QtGui.QIcon('../favicon.png'))
 
 welcomeScreen = WelcomeScreen()
 allWidgets.widgetsObjects.append(welcomeScreen)
@@ -146,21 +171,21 @@ QrSignIn = QRSignIn(allWidgets)
 allWidgets.widgetsObjects.append(QrSignIn)
 allWidgets.widgets.addWidget(QrSignIn)  # index 2
 
-passwordSignIn = PINSignIn(allWidgets)
-allWidgets.widgetsObjects.append(passwordSignIn)
-allWidgets.widgets.addWidget(passwordSignIn)  # index 3
+PinSignIn = PINSignIn(allWidgets)
+allWidgets.widgetsObjects.append(PinSignIn)
+allWidgets.widgets.addWidget(PinSignIn)  # index 3
 
 emailSignUp = EmailSignUp(allWidgets)
 allWidgets.widgetsObjects.append(emailSignUp)
 allWidgets.widgets.addWidget(emailSignUp)  # index 4
 
-passwordSignUp = PasswordSignUp(allWidgets)
-allWidgets.widgetsObjects.append(passwordSignUp)
-allWidgets.widgets.addWidget(passwordSignUp)  # index 5
+QrSignUp = QRSignUp(allWidgets)
+allWidgets.widgetsObjects.append(QrSignUp)
+allWidgets.widgets.addWidget(QrSignUp)  # index 5
 
-phoneNumberSignUp = PhoneSignUp(allWidgets)
-allWidgets.widgetsObjects.append(phoneNumberSignUp)
-allWidgets.widgets.addWidget(phoneNumberSignUp)  # index 6
+PinSignUp = PINSignUp(allWidgets)
+allWidgets.widgetsObjects.append(PinSignUp)
+allWidgets.widgets.addWidget(PinSignUp)  # index 6
 
 encryption = Encryption(allWidgets)
 allWidgets.widgetsObjects.append(encryption)
