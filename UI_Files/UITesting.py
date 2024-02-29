@@ -111,16 +111,16 @@ class allWidgets():
     @staticmethod
     def goToEncryption():
         allWidgets.widgets.setCurrentIndex(7)
-        allWidgets.widgets.setFixedSize(QSize(1223, 711))
+        allWidgets.widgets.setFixedSize(QSize(1223, 682))
 
     @staticmethod
     def goToStegoContent():
         allWidgets.widgets.setCurrentIndex(7)
-        allWidgets.widgets.setFixedSize(QSize(1223, 711))
+        allWidgets.widgets.setFixedSize(QSize(1223, 682))
     @staticmethod
     def goToEmailInformation():
         allWidgets.widgets.setCurrentIndex(9)
-        allWidgets.widgets.setFixedSize(QSize(1081, 711))
+        allWidgets.widgets.setFixedSize(QSize(1081, 682))
 
     #Go to decryption screens
 
@@ -145,7 +145,7 @@ class allWidgets():
 
 
         allWidgets.widgets.setCurrentIndex(12)  # change to 12
-        allWidgets.widgets.setFixedSize(QSize(1128, 762))
+        allWidgets.widgets.setFixedSize(QSize(1128, 682))
 
     @staticmethod
     def goToEmailStatusFromUpload():
@@ -221,5 +221,10 @@ allWidgets.widgets.setFixedHeight(630)
 allWidgets.widgets.setCurrentIndex((0))
 
 allWidgets.widgets.show()
+
+allWidgets.widgets.setFixedWidth(1223)
+allWidgets.widgets.setFixedHeight(682)
+
+allWidgets.widgets.setCurrentIndex((7))
 
 app.exec_()

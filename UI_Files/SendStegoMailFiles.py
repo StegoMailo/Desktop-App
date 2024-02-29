@@ -3,14 +3,13 @@ import random
 import re
 import threading
 import time
-from email.utils import parseaddr
 from threading import Thread
 
 import cv2
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt, QSize, QObject, pyqtSignal
-from PyQt5.QtGui import QPixmap, QFont
-from PyQt5.QtWidgets import QDialog, QFileDialog, QLabel, QStackedWidget, QMessageBox, QProgressBar
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QDialog, QFileDialog, QLabel, QStackedWidget, QMessageBox
 from PyQt5.uic import loadUi
 
 
@@ -51,15 +50,16 @@ class DraggableFilesQLabelSecretFile(QLabel):
         # object1 = DraggableFiles_Cover_Media()
 
         secretFileSize = (float(os.path.getsize(file_path) / (1024 ** 2)))
-        self.txtSecretFileSize.setText("Media size: " + f"{secretFileSize:.3f}" + "  MB")  # in bytes
+        self.txtSecretFileName.setText("Secret File Size: " + f"{secretFileSize:.3f}" + "  MB")  # in bytes
 
-        self.txtSecretFileName.setText("Secret File Name: " + os.path.basename(file_path))
+        self.txtSecretFileSize.setText("Secret File Name: " + os.path.basename(file_path))
 
         maxSecretSize = self.txtCoverMedia.maxSecretSize
 
         if maxSecretSize != 0:
             if maxSecretSize >= secretFileSize:
                 self.txtFileSizeValidation.setText("File Can Be Sent")
+                self.sendStegoScreen.allWidgets.secretFilePath = file_path
             else:
                 msg = QMessageBox()
                 msg.setIcon(QMessageBox.Warning)
@@ -82,8 +82,11 @@ class DraggableFilesQLabelCoverMedia(QLabel):
 
     maxSecretSize = 0
 
-    def __init__(self, widget, fileNameLabel: QLabel, fileSizeLabel: QLabel, maxSecretMessageSizeLabel: QLabel):
+    def __init__(self, widget, sendStegoScreen: QDialog, fileNameLabel: QLabel, fileSizeLabel: QLabel,
+                 maxSecretMessageSizeLabel: QLabel):
         super(DraggableFilesQLabelCoverMedia, self).__init__(widget)
+
+        self.sendStegoScreen = sendStegoScreen
 
         self.setAcceptDrops(True)
         self.fileNameLabel = fileNameLabel
@@ -172,6 +175,8 @@ class DraggableFilesQLabelCoverMedia(QLabel):
         self.fileSizeLabel.setText("Media Size: " + f"{coverFileSize:.3f}" + "  MB")  # in bytes
         self.maxSecretMessageSizeLabel.setText("Max Secret File:  " + f"{self.maxSecretSize:.3f}" + "  MB")
 
+        self.sendStegoScreen.allWidgets.coverMediaPath = file_path
+
 
 class Encryption(QDialog):
     stackedWidget: QStackedWidget
@@ -181,7 +186,7 @@ class Encryption(QDialog):
 
     def __init__(self, allWidgets):
         super(Encryption, self).__init__()
-        loadUi("Encryption.ui", self)
+        loadUi("./UI_Files/Encryption.ui", self)
 
         self.allWidgets = allWidgets
         self.stackedWidget = allWidgets.widgets
@@ -196,7 +201,7 @@ class Encryption(QDialog):
         self.btnDecryption.clicked.connect(self.goToDecryption)
         self.btnEmailStatus.clicked.connect(self.goToEmailStatus)
 
-        self.txtCoverMediaArea = DraggableFilesQLabelCoverMedia(self, self.txtMediaName, self.txtMediaSize,
+        self.txtCoverMediaArea = DraggableFilesQLabelCoverMedia(self,self, self.txtMediaName, self.txtMediaSize,
                                                                 self.txtMaxSecretMessageSize)
 
         self.txtSecretFileArea = DraggableFilesQLabelSecretFile(self, self.txtCoverMediaArea, self, self.txtSecretName
@@ -233,41 +238,117 @@ class Encryption(QDialog):
         self.txtCoverBrowse.raise_()
         self.txtSecretFileBrowse.raise_()
 
+        self.btnStegoMails.clicked.connect(self.goToDecryption)
+
+    def goToDecryption(self):
+        self.allWidgets.goToDecryption()
+
     def browseCoverMedia(self, *arg, **kwargs):
         filter = "Videos (.mp4), Images(*.png , *.jpg , *.jpeg , *.bmp)"
-        messageFileName = QFileDialog.getOpenFileNames(self, 'Get Message File', './', filter=filter)
+        coverFilePath = QFileDialog.getOpenFileNames(self, 'Get Message File', './', filter=filter)
 
-        if len(messageFileName[0]) != 0:
-            self.txtFileChosen.setText(messageFileName[0][0].split("/")[-1])
+        if len(coverFilePath[0]) != 0:
 
-            filePath = messageFileName[0][0]
-            coverFileName = os.path.basename(filePath)
-            coverFileSize = float((os.path.getsize(filePath)) / 1024)
-            self.maxSecretSize = (float((os.path.getsize(filePath) / 8) / 1024))
+            file_path = coverFilePath[0][0]
 
-            if self.maxSecretSize > 25:
-                self.maxSecretSize = 25
+            if file_path.split('.')[-1] == "mp4":
 
-            self.fileNameLabel.setText("Media Name: " + coverFileName)
-            self.fileSizeLabel.setText("Media Size: " + f"{coverFileSize:.3f}" + "  MB")  # in bytes
-            self.maxSecretMessageSizeLabel.setText("Max Secret File:  " + f"{self.maxSecretSize:.3f}" + "  MB")
+                cap = cv2.VideoCapture(self.secretFilePath)
+
+                allFrames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+                random.seed(1)
+
+                cap.set(cv2.CAP_PROP_POS_FRAMES, random.randint(0, allFrames - 1))
+
+                ret, frame = cap.read()
+
+                if ret:
+                    print("hi")
+                else:
+                    print("not hi")
+
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+                img = QtGui.QImage(frame, frame.shape[1], frame.shape[0], QtGui.QImage.Format_RGB888)
+                self.txtCoverMediaArea.setPixmap(QPixmap(img))
+                self.txtCoverMediaArea.setScaledContents(True)
+
+                width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+                frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+                height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+                colors = 3
+
+                self.maxSecretSize = int(width * frames * height * colors) // 8
+
+            else:
+
+                image = cv2.imread(file_path)
+
+                width = len(image)
+                height = len(image[0])
+                print(width)
+                print(height)
+                colors = 3
+                print("TEST")
+                self.maxSecretSize = (int(width * height * colors) // 8) / (1024 ** 2)
+
+                print(self.maxSecretSize)
+
+                self.txtCoverMediaArea.setPixmap(QPixmap(file_path))
+                self.txtCoverMediaArea.setScaledContents(True)
+
+            # Extract file name and size
+
+            coverFileName = os.path.basename(file_path)
+            coverFileSize = float((os.path.getsize(file_path)) / (1024 ** 2))
+
+            if self.maxSecretSize > 5:
+                self.maxSecretSize = 5
+
+            self.txtMediaName.setText("Media Name: " + coverFileName)
+            self.txtMediaSize.setText("Media Size: " + f"{coverFileSize:.3f}" + "  MB")  # in bytes
+            self.txtMaxSecretMessageSize.setText("Max Secret File:  " + f"{self.maxSecretSize:.3f}" + "  MB")
 
     def browseSecretFile(self, *arg, **kwargs):
         messageFileName = QFileDialog.getOpenFileNames(self, 'Get Message File', './')
 
         if len(messageFileName[0]) != 0:
-            self.txtMediaName.setText(messageFileName[0][0].split("/")[-1])
+            file_path = messageFileName[0][0]
+
+            #self.setPixmap(QPixmap(file_path))
+            #self.setScaledContents(True)
+
+            # object1 = DraggableFiles_Cover_Media()
+
+            secretFileSize = (float(os.path.getsize(file_path) / (1024 ** 2)))
+            self.txtSecretSize.setText("Secret File Size: " + f"{secretFileSize:.3f}" + "  MB")  # in bytes
+
+            self.txtSecretName.setText("Secret File Name: " + os.path.basename(file_path))
+
+            maxSecretSize = self.txtCoverMediaArea.maxSecretSize
+
+            if maxSecretSize != 0:
+                if maxSecretSize >= secretFileSize:
+                    self.txtFileSizeValidation.setText("File Can Be Sent")
+                    self.allWidgets.secretFilePath = file_path
+                else:
+                    msg = QMessageBox()
+                    msg.setIcon(QMessageBox.Warning)
+
+                    msg.setText(
+                        "There is not enough space in the Cover Media to hide the secret file!\nPlease choose a bigger cover media file or a smaller secret file")
+
+                    msg.setWindowTitle("Cannot Hide!")
+
+                    msg.setStandardButtons(QMessageBox.Ok)
+                    retval = msg.exec_()
 
     def goToAdvancedSettings(self):
         self.stackedWidget.setCurrentIndex(8)
         self.stackedWidget.setFixedSize(QSize(670, 601))
 
-
     def goToEmailInformation(self):
         self.allWidgets.goToEmailInformation()
-
-    def goToDecryption(self):
-        self.allWidgets.goToDecryption()
 
     def goToEmailStatus(self):
         self.allWidgets.goToEmailStatus()
@@ -278,9 +359,10 @@ class AdvancedSettings(QDialog):
 
     def __init__(self, allWidgets):
         super(AdvancedSettings, self).__init__()
-        loadUi("Advanced Settings.ui", self)
+        loadUi("./UI_Files/Advanced Settings.ui", self)
 
         self.stackedWidget = allWidgets.widgets
+        self.allWidgets = allWidgets
         self.btnDone.clicked.connect(self.goToEncryption)
 
     def goToEncryption(self):  # get data then     backToEncryptionUI
@@ -296,7 +378,7 @@ class AdvancedSettings(QDialog):
         print(self.allWidgets.saveStegoMedia)
 
         self.stackedWidget.setCurrentIndex(7)
-        self.stackedWidget.setFixedSize(QSize(1223, 685))
+        self.stackedWidget.setFixedSize(QSize(1223, 682))
 
 
 class EmailInformation(QDialog):
@@ -304,11 +386,10 @@ class EmailInformation(QDialog):
 
     def __init__(self, allWidgets):
         super(EmailInformation, self).__init__()
-        loadUi("Email Information.ui", self)
+        loadUi("./UI_Files/Email Information.ui", self)
 
         self.stackedWidget = allWidgets.widgets
         self.allWidgets = allWidgets
-
 
         self.btnEncryption.clicked.connect(self.goToStegoContent)
 
@@ -317,6 +398,11 @@ class EmailInformation(QDialog):
         self.btnStegoContent.clicked.connect(self.goToStegoContent)
 
         self.btnSend.clicked.connect(self.sendStegoMail)
+
+        self.btnStegoMails.clicked.connect(self.goToDecryption)
+
+    def goToDecryption(self):
+        self.allWidgets.goToDecryption()
 
     def sendStegoMail(self):  # send the Gmail content then backToEncryptionUI
         receiver = self.tfTo.text()
@@ -369,7 +455,7 @@ class EmailInformation(QDialog):
                     self.stackedWidget.setFixedSize(QSize(600, 400))
 
     def goToDecryption(self):
-       self.allWidgets.goToDecryption()
+        self.allWidgets.goToDecryption()
 
     def goToEmailStatus(self):
         self.allWidgets.goToEmailStatus()
@@ -386,7 +472,7 @@ class SentEmailStatus(QDialog):
 
     def __init__(self, allWidgets):
         super(SentEmailStatus, self).__init__()
-        loadUi("Send Email.ui", self)
+        loadUi("./UI_Files/Send Email.ui", self)
 
         self.stackedWidget = allWidgets.widgets
         self.allWidgets = allWidgets
@@ -417,7 +503,6 @@ class SentEmailStatus(QDialog):
             self.paused = False
 
         print(QMessageBox.Yes)
-
 
     def encodeStegoFile(self):
         progress = 0

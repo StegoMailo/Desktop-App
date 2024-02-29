@@ -12,11 +12,13 @@ import requests
 from bs4 import BeautifulSoup
 from Gmail import AuthenticateEmail
 
-
 stegoMail = []
 subjects = []
 senders = []
 messageID = []
+bodies = []
+
+
 def getAllStegoMail():
     try:
         # Call the Gmail API
@@ -26,11 +28,18 @@ def getAllStegoMail():
         result = service.users().messages().list(userId='me',
                                                  q="{-from:me subject:stego has:attachment} OR from:me to:me subject:stego has:attachment").execute()
 
+
         # We can also pass maxResults to get any number of emails. Like this:
         # result = service.users().messages().list(maxResults=200, userId='me').execute()
         messages = result.get('messages')
         # print(messages)
         # messages is a list of dictionaries where each dictionary contains a message id.
+        global stegoMail, subjects, senders, messageID, bodies
+        stegoMail = []
+        subjects = []
+        senders = []
+        messageID = []
+        bodies = []
 
         # iterate through all the messages
         for msg in messages:
@@ -38,7 +47,7 @@ def getAllStegoMail():
             # Get the message from its id
             txt = service.users().messages().get(userId='me', id=msg['id']).execute()
 
-            print(txt)
+            # print(txt)
             # Use try-except to avoid any Errors
             try:
                 # Get value of 'payload' from dictionary 'txt'
@@ -48,27 +57,31 @@ def getAllStegoMail():
                 # Look for Subject and Sender Gmail in the headers
                 sender = ""
                 subject = ""
-
                 for d in headers:
                     if d['name'] == 'Subject':
                         subject = d['value']
                         subjects.append(subject)
-                        # print("Subject: ", subject)
+                        print("Subject: ", subject)
                     if d['name'] == 'From':
                         sender = d['value']
-                        senders.append(sender)
+                        senders.append(sender.split('<')[1].split('>')[0])
                         messageID.append(msg['id'])
-                        # print("sender: ", sender)
+                        print("sender: ", sender.split('<')[1].split('>')[0])
 
                 # The Body of the message is in Encrypted format. So, we have to decode it.
                 # Get the data and decode it with base 64 decoder.
                 # print(payload.get('parts')[0])
-                parts = payload.get('parts')[0]
-                # print(parts)
+                parts = payload['parts'][0]['parts'][0]
+                #print(txt['payload']['parts'][0]['parts'][0]['body'])
+                #print(parts['body']['data'])
                 data = parts['body']['data']
                 data = data.replace("-", "+").replace("_", "/")
                 decoded_data = base64.b64decode(data)
                 body = decoded_data.decode('utf-8')
+
+                bodies.append(body)
+
+                print(body)
 
                 # Printing the subject, sender's email and message
                 # print("Subject: ", subject)
@@ -81,8 +94,8 @@ def getAllStegoMail():
     except Exception as error:
         print(f'An error occurred: {error}')
 
-def downloadAttachment(messageID):
 
+def downloadAttachment(messageID):
     service = build('gmail', 'v1', credentials=AuthenticateEmail.creds)
     message = service.users().messages().get(userId='me', id=messageID).execute()
 
@@ -102,6 +115,7 @@ def downloadAttachment(messageID):
                 f.write(file_data)
 
 
-getAllStegoMail()
-downloadAttachment()
-print(stegoMail)
+# getAllStegoMail()
+# downloadAttachment()
+# print(stegoMail)
+

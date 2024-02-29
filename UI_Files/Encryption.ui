@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1223</width>
-    <height>685</height>
+    <width>1227</width>
+    <height>691</height>
    </rect>
   </property>
   <property name="font">
@@ -28,7 +28,7 @@ background-color: rgb(248, 248, 248);</string>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>530</x>
+     <x>570</x>
      <y>30</y>
      <width>401</width>
      <height>51</height>
@@ -41,7 +41,7 @@ background-color: rgb(248, 248, 248);</string>
   <widget class="QLabel" name="coverMediaLabel">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>380</x>
      <y>140</y>
      <width>251</width>
      <height>51</height>
@@ -54,7 +54,7 @@ background-color: rgb(248, 248, 248);</string>
   <widget class="QLabel" name="secretFileLabel">
    <property name="geometry">
     <rect>
-     <x>850</x>
+     <x>890</x>
      <y>140</y>
      <width>251</width>
      <height>51</height>
@@ -70,7 +70,7 @@ background-color: rgb(248, 248, 248);</string>
    </property>
    <property name="geometry">
     <rect>
-     <x>630</x>
+     <x>670</x>
      <y>610</y>
      <width>191</width>
      <height>41</height>
@@ -97,7 +97,7 @@ background-color: rgb(248, 248, 248);</string>
   <widget class="QCommandLinkButton" name="btnAdvancedSettings">
    <property name="geometry">
     <rect>
-     <x>320</x>
+     <x>360</x>
      <y>610</y>
      <width>221</width>
      <height>41</height>
@@ -122,9 +122,9 @@ background-color: rgb(248, 248, 248);</string>
   <widget class="QPushButton" name="btnEmailStatus">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>280</y>
-     <width>141</width>
+     <x>35</x>
+     <y>350</y>
+     <width>150</width>
      <height>40</height>
     </rect>
    </property>
@@ -176,9 +176,9 @@ text-align: center;
   <widget class="QPushButton" name="btnEmailContent">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>35</x>
      <y>170</y>
-     <width>151</width>
+     <width>150</width>
      <height>40</height>
     </rect>
    </property>
@@ -225,13 +225,13 @@ border: 0.5px solid #000000;
 background-color: rgb(230, 230, 230);</string>
    </property>
    <property name="text">
-    <string>         Stego Content</string>
+    <string/>
    </property>
   </widget>
   <widget class="QLabel" name="txtMediaName">
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>310</x>
      <y>440</y>
      <width>351</width>
      <height>31</height>
@@ -249,9 +249,9 @@ background-color: rgb(230, 230, 230);</string>
   <widget class="QLabel" name="txtMediaSize">
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>310</x>
      <y>470</y>
-     <width>251</width>
+     <width>351</width>
      <height>31</height>
     </rect>
    </property>
@@ -267,7 +267,7 @@ background-color: rgb(230, 230, 230);</string>
   <widget class="QLabel" name="txtFileSizeValidation">
    <property name="geometry">
     <rect>
-     <x>570</x>
+     <x>610</x>
      <y>550</y>
      <width>291</width>
      <height>31</height>
@@ -288,10 +288,10 @@ background-color: rgb(230, 230, 230);</string>
   <widget class="Line" name="line">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>10</y>
-     <width>16</width>
-     <height>661</height>
+     <x>260</x>
+     <y>-10</y>
+     <width>8</width>
+     <height>691</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -306,7 +306,7 @@ background-color: rgb(230, 230, 230);</string>
     <rect>
      <x>10</x>
      <y>240</y>
-     <width>231</width>
+     <width>235</width>
      <height>40</height>
     </rect>
    </property>
@@ -331,8 +331,8 @@ text-align: center;
   <widget class="QLabel" name="txtCoverBrowse">
    <property name="geometry">
     <rect>
-     <x>410</x>
-     <y>390</y>
+     <x>600</x>
+     <y>250</y>
      <width>81</width>
      <height>21</height>
     </rect>
@@ -346,14 +346,16 @@ text-align: center;
     <string notr="true">
 QLabel#txtCoverBrowse::hover
 {
-background-color: rgba(138, 198, 253,0.001);
-color : rgb(52, 37, 255)
+background-color: rgba(138, 198, 253,0.2);
+color : rgb(52, 37, 255);
+border: 2px solid black;
 }
 
 QLabel#txtCoverBrowse{
 
-background-color: rgba(0, 0, 0, 0.001);
+background-color: rgba(248, 248, 248, 1);
 color:rgb(0,0,0);
+border: 2px solid black;
 
 }</string>
    </property>
@@ -367,8 +369,8 @@ color:rgb(0,0,0);
   <widget class="QLabel" name="txtSecretFileBrowse">
    <property name="geometry">
     <rect>
-     <x>940</x>
-     <y>390</y>
+     <x>760</x>
+     <y>360</y>
      <width>81</width>
      <height>21</height>
     </rect>
@@ -382,14 +384,16 @@ color:rgb(0,0,0);
     <string notr="true">
 QLabel#txtSecretFileBrowse::hover
 {
-background-color: rgba(138, 198, 253,0.0);
-color : rgb(52, 37, 255)
+background-color: rgba(138, 198, 253,0.2);
+color : rgb(52, 37, 255);
+border: 2px solid black;
 }
 
 QLabel#txtSecretFileBrowse{
 
-background-color: rgba(138, 198, 253,0.0);
+background-color: rgba(248, 248, 248, 1);
 color:rgb(0,0,0);
+border: 2px solid black;
 
 }</string>
    </property>
@@ -403,9 +407,9 @@ color:rgb(0,0,0);
   <widget class="QLabel" name="txtSecretName">
    <property name="geometry">
     <rect>
-     <x>770</x>
+     <x>810</x>
      <y>450</y>
-     <width>231</width>
+     <width>401</width>
      <height>31</height>
     </rect>
    </property>
@@ -421,7 +425,7 @@ color:rgb(0,0,0);
   <widget class="QLabel" name="txtSecretSize">
    <property name="geometry">
     <rect>
-     <x>770</x>
+     <x>810</x>
      <y>480</y>
      <width>411</width>
      <height>31</height>
@@ -439,7 +443,7 @@ color:rgb(0,0,0);
   <widget class="QLabel" name="txtMaxSecretMessageSize">
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>310</x>
      <y>490</y>
      <width>391</width>
      <height>41</height>
@@ -455,6 +459,63 @@ color:rgb(0,0,0);
    </property>
    <property name="text">
     <string>Max Secret File:</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="txtStegoContent">
+   <property name="geometry">
+    <rect>
+     <x>35</x>
+     <y>120</y>
+     <width>150</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:black;
+box-shadow: none;
+border-style:flat;
+text-align: center;
+background-color: rgba(255, 255, 255, 0);</string>
+   </property>
+   <property name="text">
+    <string>Stego Content</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnStegoMails">
+   <property name="geometry">
+    <rect>
+     <x>35</x>
+     <y>295</y>
+     <width>150</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:black;
+box-shadow: none;
+border-style:flat;
+text-align: center;
+background-color: rgba(255, 255, 255, 0);</string>
+   </property>
+   <property name="text">
+    <string>All Stego Mails</string>
    </property>
   </widget>
  </widget>

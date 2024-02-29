@@ -1,12 +1,10 @@
-##########################################################################################################
 import sys
 import threading
 import time
 
-from PyQt5 import QtGui
-from PyQt5.QtCore import Qt, QSize, pyqtSignal, QObject
-from PyQt5.QtWidgets import QDialog, QStackedWidget, QFileDialog, QListWidget, QListWidgetItem, QWidget, QVBoxLayout, \
-    QLabel, QHBoxLayout, QFrame, QMessageBox
+from PyQt5.QtCore import QSize, pyqtSignal, QObject
+from PyQt5.QtWidgets import QDialog, QStackedWidget, QFileDialog, QListWidgetItem, QWidget, QVBoxLayout, \
+    QLabel, QHBoxLayout, QMessageBox, QListWidget
 from PyQt5.uic import loadUi
 
 
@@ -23,10 +21,12 @@ class QCustomQWidget(QWidget):
 
         self.txtSubject = QLabel()
         self.txtSender = QLabel()
+        self.txtSubject.setFixedHeight(50)
         self.textQHBoxLayout.addWidget(self.txtSubject)
         self.textQHBoxLayout.addWidget(self.txtSender)
         self.allQVBoxLayout = QVBoxLayout()
         self.allQVBoxLayout.addLayout(self.textQHBoxLayout, 1)
+
         self.setLayout(self.allQVBoxLayout)
 
         font = self.txtSubject.font()
@@ -63,11 +63,12 @@ class QCustomQWidget(QWidget):
 class Decryption(QDialog):
     stegoFile: str
     stackedWidget: QStackedWidget
-    testList = [("hi", "Taha"), ("Iloveshwarma", "Izzat"), ("what's up bro", "Fathi")]
+    #testList = [("hi", "Taha"), ("Iloveshwarma", "Izzat"), ("what's up bro", "Fathi")]
+    emailList = []
 
     def __init__(self, allWidgets):
         super(Decryption, self).__init__()
-        loadUi("Decryption.ui", self)
+        loadUi("./UI_Files/Decryption.ui", self)
 
         self.allWidgets = allWidgets
         self.stackedWidget = allWidgets.widgets
@@ -82,15 +83,17 @@ class Decryption(QDialog):
 
         # self.lwEmails.itemClicked.connect(self.goToEmailStatusFromList)
 
-        self.fillList()
+        #self.fillList()
         self.lwEmails.itemClicked.connect(self.goToEmailStatusFromList)
         # QListWidget.
 
     def fillList(self):
-        for subject, sender in self.testList:
+
+        self.lwEmails.clear()
+        for email in self.emailList:
             customListItem = QCustomQWidget()
-            customListItem.setSubject(subject)
-            customListItem.setSender(sender)
+            customListItem.setSubject(email[2])
+            customListItem.setSender(email[1])
 
             myQListWidgetItem = QListWidgetItem(self.lwEmails)
             myQListWidgetItem.setSizeHint(customListItem.sizeHint())
@@ -137,10 +140,9 @@ class EmailStatus(QDialog):
     fileName = "File Name:"
     subject = "Subject:"
 
-
     def __init__(self, allWidgets):
         super(EmailStatus, self).__init__()
-        loadUi("Stego File Information.ui", self)
+        loadUi("./UI_Files/Stego File Information.ui", self)
 
         self.allWidgets = allWidgets
         self.stackedWidget = allWidgets.widgets
@@ -151,7 +153,10 @@ class EmailStatus(QDialog):
 
         self.btnDecryption.clicked.connect(self.goToDecryption)
         self.btnExtract.clicked.connect(self.extractStegoFile)
+        self.btnStegoMails.clicked.connect(self.goToDecryption)
 
+    def goToDecryption(self):
+        self.allWidgets.goToDecryption()
 
     def goToStegoContent(self):  # go to  Stego content UI
         self.allWidgets.goToStegoContent()
@@ -179,7 +184,7 @@ class ExtractStego(QDialog):
 
     def __init__(self, allWidgets):
         super(ExtractStego, self).__init__()
-        loadUi("Extracting Stego.ui", self)
+        loadUi("./UI_Files/Extracting Stego.ui", self)
 
         self.stackedWidget = allWidgets.widgets
         self.allWidgets = allWidgets
@@ -259,4 +264,3 @@ def testingTreads(callbackFunc, sentEmail):
         progress += 1
         mySrc.myGUI_signal.emit(progress)
     mySrc.myGUI_signal.emit(0)
-

@@ -26,8 +26,8 @@ def authenticateUser():
     global creds, currentEmail, authenticated
 
     creds=None
-    if os.path.exists("../Gmail/token.json"):
-        creds = Credentials.from_authorized_user_file("../Gmail/token.json", SCOPES)
+    if os.path.exists("./Gmail/token.json"):
+        creds = Credentials.from_authorized_user_file("./Gmail/token.json", SCOPES)
     # If there are no (valid) credentials available, let the user log in.
 
     if not creds or not creds.valid:
@@ -38,15 +38,15 @@ def authenticateUser():
         else:
 
             flow = InstalledAppFlow.from_client_secrets_file(
-                "../Gmail/credentials.json", SCOPES  # https://stackoverflow.com/a/73071344/17870878
+                "./Gmail/credentials.json", SCOPES  # https://stackoverflow.com/a/73071344/17870878
             )
 
             creds = flow.run_local_server(port=0)
             print(flow.authorization_url())
 
         # Save the credentials for the next run
-        # with open("../Gmail/token.json", "w") as token:
-        #     token.write(creds.to_json())
+        with open("./Gmail/token.json", "w") as token:
+            token.write(creds.to_json())
 
     URL = "https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + creds.token
 

@@ -18,7 +18,7 @@ class EmailSignIn(QDialog):
 
     def __init__(self, allWidgets):
         super(EmailSignIn, self).__init__()
-        loadUi('Email Sign In.ui', self)
+        loadUi('./UI_Files/Email Sign In.ui', self)
 
         self.widgets = allWidgets.widgets
         self.allWidgets = allWidgets
@@ -58,7 +58,7 @@ class EmailSignIn(QDialog):
 
     def updateUI(self):
         if AuthenticateEmail.currentEmail != "":
-            URL = "https://localhost:44321/api/Users/CheckEmail"
+            URL = self.allWidgets.APIURL+"/CheckEmail"
 
             checkEmail = {"email": AuthenticateEmail.currentEmail}
 
@@ -94,7 +94,7 @@ class QRSignIn(QDialog):
 
     def __init__(self, allWidgets):
         super(QRSignIn, self).__init__()
-        loadUi('QR Sign In.ui', self)
+        loadUi('./UI_Files/QR Sign In.ui', self)
 
         self.widgets = allWidgets.widgets
         self.allWidgets = allWidgets
@@ -143,7 +143,7 @@ class QRSignIn(QDialog):
 
         print(QRdataSignature)
 
-        URL = "https://localhost:44321/api/Users/CheckQR"
+        URL = self.allWidgets.APIURL+"/CheckQR"
 
         createUserBody = {"email": self.allWidgets.emailSignIn,
                           "qrSignature": QRdataSignature}
@@ -195,7 +195,7 @@ class PINSignIn(QDialog):
 
     def __init__(self, allWidgets):
         super(PINSignIn, self).__init__()
-        loadUi('PIN Sign In.ui', self)
+        loadUi('./UI_Files/PIN Sign In.ui', self)
 
         self.widgets = allWidgets.widgets
         self.allWidgets = allWidgets
@@ -278,7 +278,7 @@ class PINSignIn(QDialog):
         print(self.allWidgets.emailSignIn)
         print(PINSignature)
 
-        URL = "https://localhost:44321/api/Users/CheckPIN"
+        URL = self.allWidgets.APIURL+"/CheckPIN"
 
         createUserBody = {"email": self.allWidgets.emailSignIn,
                           "pinSignature": PINSignature}
@@ -357,6 +357,7 @@ class DraggableFilesQLabelQR(QLabel):
 
         self.QRScreen.QRFilePath = file_path
         self.QRScreen.allWidgets.QRSignInDirectory = file_path
+        print(self.QRScreen.QRFilePath)
         print(decodeQR(self.QRScreen.QRFilePath))
 
         self.setPixmap(QPixmap(self.QRScreen.QRFilePath))

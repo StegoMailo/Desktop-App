@@ -1,12 +1,13 @@
 import threading
 from hashlib import sha256
+
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 import requests
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QSize, QObject, pyqtSignal
-from PyQt5.QtWidgets import QDialog, QLineEdit, QStackedWidget, QMessageBox
+from PyQt5.QtWidgets import QDialog, QStackedWidget, QMessageBox
 from PyQt5.uic import loadUi
 
 from Authentication.GenerateQR import generateQR
@@ -20,7 +21,7 @@ class EmailSignUp(QDialog):
 
     def __init__(self, allWidgets):
         super(EmailSignUp, self).__init__()
-        loadUi('Email Sign Up.ui', self)
+        loadUi('./UI_Files/Email Sign Up.ui', self)
 
         self.widgets = allWidgets.widgets
         self.allWidgets = allWidgets
@@ -44,7 +45,7 @@ class EmailSignUp(QDialog):
 
     def updateUI(self):
         if AuthenticateEmail.currentEmail != "":
-            URL = "https://localhost:44321/api/Users/GetByEmail/"
+            URL = self.allWidgets.APIURL+"/GetByEmail/"
             request = requests.get(url=URL+ AuthenticateEmail.currentEmail, verify=False)
 
             if request.status_code == 404:
@@ -95,7 +96,7 @@ class QRSignUp(QDialog):
 
     def __init__(self, allWidgets):
         super(QRSignUp, self).__init__()
-        loadUi('QR Sign Up.ui', self)
+        loadUi('./UI_Files/QR Sign Up.ui', self)
         self.widgets = allWidgets.widgets
         self.allWidgets = allWidgets
 
@@ -143,7 +144,7 @@ class PINSignUp(QDialog):
 
     def __init__(self, allWidgets):
         super(PINSignUp, self).__init__()
-        loadUi('PIN Sign Up.ui', self)
+        loadUi('./UI_Files/PIN Sign Up.ui', self)
 
         self.widgets = allWidgets.widgets
         self.allWidgets = allWidgets
@@ -302,7 +303,7 @@ class PINSignUp(QDialog):
 
                             PINSignature = sha256(self.allWidgets.PINSignUp.encode("utf-8")).hexdigest()
 
-                            URL = "https://localhost:44321/api/Users/AddUser"
+                            URL = self.allWidgets.APIURL+"/AddUser"
 
                             createUserBody = {"email": self.allWidgets.emailSignUp,
                                               "qrSignature": QRdataSignature,
