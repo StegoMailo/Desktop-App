@@ -342,11 +342,19 @@ background-color: rgb(230, 230, 230);</string>
   <widget class="QPlainTextEdit" name="taBody">
    <property name="geometry">
     <rect>
-     <x>510</x>
+     <x>420</x>
      <y>490</y>
-     <width>531</width>
-     <height>87</height>
+     <width>661</width>
+     <height>141</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLabel" name="tfFrom">
@@ -366,6 +374,9 @@ background-color: rgb(230, 230, 230);</string>
    <property name="text">
     <string/>
    </property>
+   <property name="textInteractionFlags">
+    <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+   </property>
   </widget>
   <widget class="QLabel" name="tfFileName">
    <property name="geometry">
@@ -384,6 +395,9 @@ background-color: rgb(230, 230, 230);</string>
    <property name="text">
     <string/>
    </property>
+   <property name="textInteractionFlags">
+    <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+   </property>
   </widget>
   <widget class="QLabel" name="tfSubject">
    <property name="geometry">
@@ -401,6 +415,9 @@ background-color: rgb(230, 230, 230);</string>
    </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="textInteractionFlags">
+    <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
    </property>
   </widget>
   <widget class="QPushButton" name="btnStegoMails">

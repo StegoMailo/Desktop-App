@@ -37,11 +37,11 @@ class QCustomQWidget(QWidget):
         self.txtSender.setFont(font)
 
         self.txtSubject.setStyleSheet('''
-            color: rgb(0, 0, 255);
+            color: rgb(0, 0, 0);
             background-color: rgba(0,0,0,0);
         ''')
         self.txtSender.setStyleSheet('''
-            color: rgb(255, 0, 0);
+            color: rgb(0, 0, 0);
             background-color: rgba(0,0,0,0);
         ''')
 
@@ -107,10 +107,11 @@ class Decryption(QDialog):
     def goToEmailStatusFromList(self, item: QListWidgetItem):
 
         customItem = self.lwEmails.itemWidget(item)
+        itemIndex = self.lwEmails.row(item)
 
         print(customItem.getSubjectString() + "  " + customItem.getSenderString())
 
-        self.allWidgets.goToEmailStatusFromList(customItem)
+        self.allWidgets.goToEmailStatusFromList(customItem,itemIndex)
 
     def goToStegoContent(self):  # go to  stego content UI
         self.allWidgets.goToStegoContent()
@@ -217,7 +218,7 @@ class ExtractStego(QDialog):
         else:
             self.paused = False
 
-        print(QMessageBox.Yes)
+        #print(QMessageBox.Yes)
 
     def encodeStegoFile(self):
         progress = 0

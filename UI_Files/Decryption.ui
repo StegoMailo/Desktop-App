@@ -82,12 +82,12 @@ border: 0.5px solid #000000;
 
 
  QListWidget#lwEmails::item {
-margin:0px 0px 2px 0px;
-border: 5px solid #000000;
+margin:0px 0px 1.5px 0px;
+border: 5px solid rgba(138, 198, 253,1);
     }
 
 QListWidget#lwEmails::item:hover {
-margin: 0px 0px 2px 0px;
+margin: 0px 0px 1.5px 0px;
 border: 5px solid rgb(255,255,255);
 background-color: rgb(138, 198, 253);
 }

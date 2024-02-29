@@ -2,7 +2,7 @@ import sys
 
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import QSize
-from PyQt5.QtWidgets import QApplication, QStackedWidget, QDialog
+from PyQt5.QtWidgets import QApplication, QStackedWidget, QDialog, QPlainTextEdit
 from PyQt5.uic import loadUi
 
 from Gmail import AuthenticateEmail, DownloadEmail
@@ -148,13 +148,17 @@ class allWidgets():
         allWidgets.widgets.setFixedSize(QSize(1128, 762))
 
     @staticmethod
-    def goToEmailStatusFromList(customItem):
+    def goToEmailStatusFromList(customItem,elementIndex):
 
         allWidgets.widgetsObjects[12].from_ = customItem.getSenderString()
         allWidgets.widgetsObjects[12].subject = customItem.getSubjectString()
 
         allWidgets.widgetsObjects[12].tfFrom .setText(allWidgets.widgetsObjects[12].from_)
         allWidgets.widgetsObjects[12].tfSubject.setText(allWidgets.widgetsObjects[12].subject)
+
+        allWidgets.widgetsObjects[12].tfFileName.setText(DownloadEmail.attachmentNames[elementIndex])
+        allWidgets.widgetsObjects[12].taBody.setPlainText(DownloadEmail.bodies[elementIndex])
+
 
 
         allWidgets.widgets.setCurrentIndex(12)  # change to 12

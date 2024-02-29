@@ -1,15 +1,7 @@
-import os.path
 import base64
-import json
-import re
-import time
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
+
 from googleapiclient.discovery import build
-import logging
-import requests
-from bs4 import BeautifulSoup
+
 from Gmail import AuthenticateEmail
 
 stegoMail = []
@@ -17,7 +9,7 @@ subjects = []
 senders = []
 messageID = []
 bodies = []
-
+attachmentNames = []
 
 def getAllStegoMail():
     try:
@@ -61,12 +53,12 @@ def getAllStegoMail():
                     if d['name'] == 'Subject':
                         subject = d['value']
                         subjects.append(subject)
-                        print("Subject: ", subject)
+                        #print("Subject: ", subject)
                     if d['name'] == 'From':
                         sender = d['value']
                         senders.append(sender.split('<')[1].split('>')[0])
                         messageID.append(msg['id'])
-                        print("sender: ", sender.split('<')[1].split('>')[0])
+                        #print("sender: ", sender.split('<')[1].split('>')[0])
 
                 # The Body of the message is in Encrypted format. So, we have to decode it.
                 # Get the data and decode it with base 64 decoder.
@@ -81,13 +73,15 @@ def getAllStegoMail():
 
                 bodies.append(body)
 
-                print(body)
+                fileName = txt['payload']['parts'][1]['filename']
+                attachmentNames.append(fileName)
+                #print(txt['payload']['parts'][1]['filename'])
 
                 # Printing the subject, sender's email and message
                 # print("Subject: ", subject)
                 # print("From: ", sender)
                 # print("Message: ", body)
-                print('\n')
+               # print('\n')
             except:
                 pass
 
