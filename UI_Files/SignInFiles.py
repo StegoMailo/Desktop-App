@@ -58,20 +58,34 @@ class EmailSignIn(QDialog):
 
     def updateUI(self):
         if AuthenticateEmail.currentEmail != "":
-            URL = self.allWidgets.APIURL+"/CheckEmail"
+            try:
+                URL = self.allWidgets.APIURL + "/CheckEmail"
 
-            checkEmail = {"email": AuthenticateEmail.currentEmail}
+                checkEmail = {"email": AuthenticateEmail.currentEmail}
 
-            checkEmailRequest = requests.post(url=URL, json=checkEmail, verify=False)
-            print(checkEmailRequest.text)
-            if checkEmailRequest.status_code == 200:
-                self.txtLoggedEmail.setText("Welcome\n" + AuthenticateEmail.currentEmail)
-                self.allWidgets.emailSignIn = AuthenticateEmail.currentEmail
-                self.allWidgets.emailSignInValid = True
-            else:
-                self.txtLoggedEmail.setText("Email not found!\nNo account has that email.")
-                self.allWidgets.emailSignIn = ""
-                self.allWidgets.emailSignInValid = False
+                checkEmailRequest = requests.post(url=URL, json=checkEmail, verify=False)
+                print(checkEmailRequest.text)
+                if checkEmailRequest.status_code == 200:
+                    self.txtLoggedEmail.setText("Welcome\n" + AuthenticateEmail.currentEmail)
+                    self.allWidgets.emailSignIn = AuthenticateEmail.currentEmail
+                    self.allWidgets.emailSignInValid = True
+                else:
+                    self.txtLoggedEmail.setText("Email not found!\nNo account has that email.")
+                    self.allWidgets.emailSignIn = ""
+                    self.allWidgets.emailSignInValid = False
+            except:
+                msg = QMessageBox()
+                msg.setIcon(QMessageBox.Icon.Critical)
+
+                msg.setText(
+                    "There is a problem with the connection to the authentication API!\nPlease make sure the API is up and running.")
+
+                msg.setWindowTitle("API Connection Bad!")
+
+                msg.addButton(QMessageBox.Ok)
+
+                retval = msg.exec_()
+
 
 
 class Communicate(QObject):
@@ -142,18 +156,31 @@ class QRSignIn(QDialog):
         QRdataSignature = sha256(QRData.encode("utf-8")).hexdigest()
 
         print(QRdataSignature)
+        try:
+            URL = self.allWidgets.APIURL + "/CheckQR"
 
-        URL = self.allWidgets.APIURL+"/CheckQR"
+            createUserBody = {"email": self.allWidgets.emailSignIn,
+                              "qrSignature": QRdataSignature}
 
-        createUserBody = {"email": self.allWidgets.emailSignIn,
-                          "qrSignature": QRdataSignature}
+            checkQRRequest = requests.post(url=URL, json=createUserBody, verify=False)
+            print(checkQRRequest.text)
+            if checkQRRequest.status_code == 200:
+                return True
+            else:
+                return False
 
-        checkQRRequest = requests.post(url=URL, json=createUserBody, verify=False)
-        print(checkQRRequest.text)
-        if checkQRRequest.status_code == 200:
-            return True
-        else:
-            return False
+        except:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Icon.Critical)
+
+            msg.setText(
+                "There is a problem with the connection to the authentication API!\nPlease make sure the API is up and running.")
+
+            msg.setWindowTitle("API Connection Bad!")
+
+            msg.addButton(QMessageBox.Ok)
+
+            retval = msg.exec_()
 
     def backToEmail(self):
 
@@ -278,17 +305,30 @@ class PINSignIn(QDialog):
         print(self.allWidgets.emailSignIn)
         print(PINSignature)
 
-        URL = self.allWidgets.APIURL+"/CheckPIN"
+        try:
+            URL = self.allWidgets.APIURL + "/CheckPIN"
 
-        createUserBody = {"email": self.allWidgets.emailSignIn,
-                          "pinSignature": PINSignature}
+            createUserBody = {"email": self.allWidgets.emailSignIn,
+                              "pinSignature": PINSignature}
 
-        checkPINRequest = requests.post(url=URL, json=createUserBody, verify=False)
-        print(checkPINRequest.text)
-        if checkPINRequest.status_code == 200:
-            return True
-        else:
-            return False
+            checkPINRequest = requests.post(url=URL, json=createUserBody, verify=False)
+            print(checkPINRequest.text)
+            if checkPINRequest.status_code == 200:
+                return True
+            else:
+                return False
+        except:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Icon.Critical)
+
+            msg.setText(
+                "There is a problem with the connection to the authentication API!\nPlease make sure the API is up and running.")
+
+            msg.setWindowTitle("API Connection Bad!")
+
+            msg.addButton(QMessageBox.Ok)
+
+            retval = msg.exec_()
 
     def signIn(self):
         self.allWidgets.PINSignIN = self.tfPin1.text() + self.tfPin2.text() + self.tfPin3.text() + self.tfPin4.text()

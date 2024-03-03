@@ -45,17 +45,33 @@ class EmailSignUp(QDialog):
 
     def updateUI(self):
         if AuthenticateEmail.currentEmail != "":
-            URL = self.allWidgets.APIURL+"/GetByEmail/"
-            request = requests.get(url=URL+ AuthenticateEmail.currentEmail, verify=False)
+            try:
+                URL = self.allWidgets.APIURL + "/GetByEmail/"
+                request = requests.get(url=URL + AuthenticateEmail.currentEmail, verify=False)
 
-            if request.status_code == 404:
-                self.txtLoggedEmail.setText("You Chose:\n" + AuthenticateEmail.currentEmail)
-                self.allWidgets.emailSignUp = AuthenticateEmail.currentEmail
-                self.allWidgets.emailSignUpValid = True
-            else:
-                self.txtLoggedEmail.setText("Email in use!\nChoose a different email.")
-                self.allWidgets.emailSignUp = ""
-                self.allWidgets.emailSignUpValid = False
+                if request.status_code == 404:
+                    self.txtLoggedEmail.setText("You Chose:\n" + AuthenticateEmail.currentEmail)
+                    self.allWidgets.emailSignUp = AuthenticateEmail.currentEmail
+                    self.allWidgets.emailSignUpValid = True
+                else:
+                    self.txtLoggedEmail.setText("Email in use!\nChoose a different email.")
+                    self.allWidgets.emailSignUp = ""
+                    self.allWidgets.emailSignUpValid = False
+
+            except:
+                msg = QMessageBox()
+                msg.setIcon(QMessageBox.Icon.Critical)
+
+                msg.setText(
+                    "There is a problem with the connection to the authentication API!\nPlease make sure the API is up and running.")
+
+                msg.setWindowTitle("API Connection Bad!")
+
+                msg.addButton(QMessageBox.Ok)
+
+                retval = msg.exec_()
+
+
 
 
 
@@ -303,27 +319,40 @@ class PINSignUp(QDialog):
 
                             PINSignature = sha256(self.allWidgets.PINSignUp.encode("utf-8")).hexdigest()
 
-                            URL = self.allWidgets.APIURL+"/AddUser"
+                            try:
+                                URL = self.allWidgets.APIURL + "/AddUser"
 
-                            createUserBody = {"email": self.allWidgets.emailSignUp,
-                                              "qrSignature": QRdataSignature,
-                                              "pinSignature": PINSignature}
+                                createUserBody = {"email": self.allWidgets.emailSignUp,
+                                                  "qrSignature": QRdataSignature,
+                                                  "pinSignature": PINSignature}
 
-                            createUserRequest = requests.post(url=URL, json=createUserBody, verify=False)
-                            userPrivateKey = createUserRequest.text
+                                createUserRequest = requests.post(url=URL, json=createUserBody, verify=False)
+                                userPrivateKey = createUserRequest.text
 
-                            with open("../TestFiles/"+self.allWidgets.emailSignUp + "_PrivateKey.txt", "w") as f:
-                                f.write(userPrivateKey)
+                                with open("../TestFiles/" + self.allWidgets.emailSignUp + "_PrivateKey.txt", "w") as f:
+                                    f.write(userPrivateKey)
 
-                            self.allWidgets.PINSignUp =""
-                            self.allWidgets.QRSignUpDirectory = ""
-                            self.allWidgets.emailSignUp = ""
+                                self.allWidgets.PINSignUp = ""
+                                self.allWidgets.QRSignUpDirectory = ""
+                                self.allWidgets.emailSignUp = ""
 
-                            self.allWidgets.emailSignUpValid = False
+                                self.allWidgets.emailSignUpValid = False
 
+                                self.widgets.setCurrentIndex(7)
+                                self.widgets.setFixedSize(QSize(1223, 685))
+                            except:
+                                msg = QMessageBox()
+                                msg.setIcon(QMessageBox.Icon.Critical)
 
-                            self.widgets.setCurrentIndex(7)
-                            self.widgets.setFixedSize(QSize(1223, 685))
+                                msg.setText(
+                                    "There is a problem with the connection to the authentication API!\nPlease make sure the API is up and running.")
+
+                                msg.setWindowTitle("API Connection Bad!")
+
+                                msg.addButton(QMessageBox.Ok)
+
+                                retval = msg.exec_()
+
 
     def backToQR(self):
         self.widgets.setCurrentIndex(5)
