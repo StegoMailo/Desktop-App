@@ -1,3 +1,4 @@
+import os
 import sys
 
 from PyQt5 import QtWidgets, QtGui
@@ -15,6 +16,7 @@ from UI_Files.SendStegoMailFiles import Encryption, AdvancedSettings, EmailInfor
 from UI_Files.SignInFiles import EmailSignIn, QRSignIn, PINSignIn
 from UI_Files.SignUpFiles import EmailSignUp, QRSignUp, PINSignUp
 
+os.remove("./tempFiles")
 
 class WelcomeScreen(QDialog):
     def __init__(self):
@@ -63,6 +65,12 @@ class allWidgets():
 
     stegoFile:str
 
+    to:str
+    From:str
+    subject:str
+    body:str
+
+    maxSecretMessageSize:float
     @staticmethod
     def abandonSignIn():
         allWidgets.emailSignIn = ""

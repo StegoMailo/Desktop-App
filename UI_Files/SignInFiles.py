@@ -1,5 +1,6 @@
 import re
 import threading
+import time
 from hashlib import sha256
 
 import requests
@@ -98,6 +99,7 @@ def openGmail(callbackFunc):
     authenticateUser()
 
     while not AuthenticateEmail.authenticated:
+        time.sleep(0.2)
         continue
     mySrc.myGUI_signal.emit()
 
@@ -153,34 +155,47 @@ class QRSignIn(QDialog):
 
     def verifyQR(self):
         QRData = decodeQR(self.allWidgets.QRSignInDirectory)
-        QRdataSignature = sha256(QRData.encode("utf-8")).hexdigest()
-
-        print(QRdataSignature)
-        try:
-            URL = self.allWidgets.APIURL + "/CheckQR"
-
-            createUserBody = {"email": self.allWidgets.emailSignIn,
-                              "qrSignature": QRdataSignature}
-
-            checkQRRequest = requests.post(url=URL, json=createUserBody, verify=False)
-            print(checkQRRequest.text)
-            if checkQRRequest.status_code == 200:
-                return True
-            else:
-                return False
-
-        except:
+        if QRData is None:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Icon.Critical)
 
             msg.setText(
-                "There is a problem with the connection to the authentication API!\nPlease make sure the API is up and running.")
+                "There is no data in this image!\nPlease make sure you have selected the right QR File!")
 
-            msg.setWindowTitle("API Connection Bad!")
+            msg.setWindowTitle("No QR Data!")
 
             msg.addButton(QMessageBox.Ok)
 
             retval = msg.exec_()
+        else:
+            QRdataSignature = sha256(QRData.encode("utf-8")).hexdigest()
+
+            #print(QRdataSignature)
+            try:
+                URL = self.allWidgets.APIURL + "/CheckQR"
+
+                createUserBody = {"email": self.allWidgets.emailSignIn,
+                                  "qrSignature": QRdataSignature}
+
+                checkQRRequest = requests.post(url=URL, json=createUserBody, verify=False)
+                print(checkQRRequest.text)
+                if checkQRRequest.status_code == 200:
+                    return True
+                else:
+                    return False
+
+            except:
+                msg = QMessageBox()
+                msg.setIcon(QMessageBox.Icon.Critical)
+
+                msg.setText(
+                    "There is a problem with the connection to the authentication API!\nPlease make sure the API is up and running.")
+
+                msg.setWindowTitle("API Connection Bad!")
+
+                msg.addButton(QMessageBox.Ok)
+
+                retval = msg.exec_()
 
     def backToEmail(self):
 
@@ -261,7 +276,7 @@ class PINSignIn(QDialog):
         else:
             if e.key() == 16777219:  # backlash
                 self.tfPin2.setText("")
-                self.tfPin1.setFocus()
+                #self.tfPin1.setFocus()
             else:
                 if (e.key() == 16777236):  # right arrow
                     self.tfPin3.setFocus()
@@ -276,7 +291,7 @@ class PINSignIn(QDialog):
         else:
             if e.key() == 16777219:  # backlash
                 self.tfPin3.setText("")
-                self.tfPin2.setFocus()
+                #self.tfPin2.setFocus()
             else:
                 if (e.key() == 16777236):  # right arrow
                     self.tfPin4.setFocus()
@@ -290,7 +305,7 @@ class PINSignIn(QDialog):
         else:
             if e.key() == 16777219:  # backlash
                 self.tfPin4.setText("")
-                self.tfPin3.setFocus()
+               # self.tfPin3.setFocus()
             else:
                 if e.key() == 16777220:  # enter
                     self.signIn()
@@ -302,8 +317,8 @@ class PINSignIn(QDialog):
 
         PINSignature = sha256(self.allWidgets.PINSignIN.encode("utf-8")).hexdigest()
 
-        print(self.allWidgets.emailSignIn)
-        print(PINSignature)
+       # print(self.allWidgets.emailSignIn)
+        #print(PINSignature)
 
         try:
             URL = self.allWidgets.APIURL + "/CheckPIN"
@@ -312,7 +327,7 @@ class PINSignIn(QDialog):
                               "pinSignature": PINSignature}
 
             checkPINRequest = requests.post(url=URL, json=createUserBody, verify=False)
-            print(checkPINRequest.text)
+            #print(checkPINRequest.text)
             if checkPINRequest.status_code == 200:
                 return True
             else:
@@ -337,7 +352,7 @@ class PINSignIn(QDialog):
             msg.setIcon(QMessageBox.Icon.Critical)
 
             msg.setText(
-                "You did not choose a PIN!\nBe sure to create a PIN before signing up.")
+                "You did not choose a PIN!\nBe sure to create a PIN before logging in.")
 
             msg.setWindowTitle("No PIN!")
 
@@ -397,8 +412,8 @@ class DraggableFilesQLabelQR(QLabel):
 
         self.QRScreen.QRFilePath = file_path
         self.QRScreen.allWidgets.QRSignInDirectory = file_path
-        print(self.QRScreen.QRFilePath)
-        print(decodeQR(self.QRScreen.QRFilePath))
+        #print(self.QRScreen.QRFilePath)
+        #print(decodeQR(self.QRScreen.QRFilePath))
 
         self.setPixmap(QPixmap(self.QRScreen.QRFilePath))
         self.setScaledContents(True)

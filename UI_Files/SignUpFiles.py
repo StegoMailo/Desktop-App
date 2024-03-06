@@ -200,7 +200,7 @@ class PINSignUp(QDialog):
         else:
             if e.key() == 16777219:  # backlash
                 self.tfPin2.setText("")
-                self.tfPin1.setFocus()
+                #self.tfPin1.setFocus()
             else:
                 if (e.key() == 16777236):  # right arrow
                     self.tfPin3.setFocus()
@@ -215,7 +215,7 @@ class PINSignUp(QDialog):
         else:
             if e.key() == 16777219:  # backlash
                 self.tfPin3.setText("")
-                self.tfPin2.setFocus()
+                #self.tfPin2.setFocus()
             else:
                 if (e.key() == 16777236):  # right arrow
                     self.tfPin4.setFocus()
@@ -229,7 +229,7 @@ class PINSignUp(QDialog):
         else:
             if e.key() == 16777219:  # backlash
                 self.tfPin4.setText("")
-                self.tfPin3.setFocus()
+                #self.tfPin3.setFocus()
             else:
                 if e.key() == 16777220:  # enter
                     self.signUp()

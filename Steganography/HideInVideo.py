@@ -12,11 +12,14 @@ from Cipher.AES import AESCipher
 
 
 class HideInVideo():
+    progress = 0
 
     def IntegerToBinaryString(self, number):
         return '{0:08b}'.format(number)
 
-    def hideInVideo(self, coverVideoPath, fileToHidePath, useAudio, seed=-1,key=-1):
+    def hideInVideo(self, coverVideoPath, fileToHidePath, useAudio, seed=-1, key=-1):
+
+        self.progress = 0
 
         # Open Cover Video
 
@@ -55,7 +58,7 @@ class HideInVideo():
 
         # Encrypt File
 
-        hiddenFileByteStream, key, iv = AESCipher().encrypt(hiddenFileByteStream,key)
+        hiddenFileByteStream, key, iv = AESCipher().encrypt(hiddenFileByteStream, key)
 
         # Convert Byte Stream to ASCII Integers From Hex
 
@@ -64,6 +67,7 @@ class HideInVideo():
         for byte in hiddenFileByteStream:
             hiddenFileAsBinaryString += f'{byte:08b}'
 
+        self.progress = 20
         # Store Important File Information To Hide Later
 
         # Get Hash of the Hidden File Byte Stream
@@ -113,9 +117,11 @@ class HideInVideo():
         # Can use the user's system instead of ram to store information.
         if not os.path.exists("./tempFiles"):
             os.makedirs("tempFiles")
-            if not os.path.exists("./tempFiles/tempFrames"):
-                os.makedirs("./tempFiles/tempFrames")
+        if not os.path.exists("./tempFiles/tempFrames"):
+            os.makedirs("./tempFiles/tempFrames")
         temp_folder = "./tempFiles/tempFrames"
+
+        self.progress = 40
 
         if seed == -1:
             seed = random.randint(0,
@@ -172,11 +178,15 @@ class HideInVideo():
                     continue
                 break  # same here
 
+        self.progress = 70
+
         self.__saveVideoFrames(fps, width, height)
         if (useAudio):
             self.__addAudioToVideo(coverVideoPath, './tempFiles/tempFinalVideoWithoutSound.avi')
 
         coverVideo.release()
+
+        self.progress = 90
 
         return seedToShare, key, iv
 

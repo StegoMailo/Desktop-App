@@ -9,12 +9,16 @@ from Cipher.AES import AESCipher
 
 class HideInImage():
     coverImageSize = 0
+    progress = 0
+
 
     def IntegerToBinaryString(self, number):
         return '{0:08b}'.format(number)
 
     def hideInImage(self, coverImageFileName, watermarkFileName, outputFileName, seed=-1):
         # Load Cover Image using OpenCV
+        self.coverImageSize = 0
+        self.progress = 0
 
         coverImage = cv2.imread(coverImageFileName)
         coverImage = cv2.cvtColor(coverImage, cv2.COLOR_BGR2RGB)
@@ -35,6 +39,7 @@ class HideInImage():
         for byte in watermarkByteStream:
             watermarkAsBinaryString += self.IntegerToBinaryString(byte)
 
+        self.progress=10
         # Convert Important Information to Bit stream
 
         watermarkBitStreamSize = len(watermarkAsBinaryString)
@@ -46,6 +51,7 @@ class HideInImage():
         for letter in watermarkInformationToHide:
             informationAsAscii.extend(ord(num) for num in letter)
 
+        self.progress=20
         watermarkInformationBitStream = []
 
         for num in informationAsAscii:
@@ -63,7 +69,7 @@ class HideInImage():
             print("Logo is too big for this cover image")
             return
         # Generate Random Sequence to Hide in the Photo
-
+        self.progress=40
         if seed == -1:
             seed = random.randint(0,
                                   9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999)
@@ -72,6 +78,7 @@ class HideInImage():
         points = random.sample([[x, y] for x in range(len(coverImage)) for y in range(len(coverImage[0]))],
                                math.ceil(len(informationToHide) / 3))
 
+        self.progress=40
         # Hide the Watermark Bit stream in the pixels
         
         i = 0
@@ -79,6 +86,7 @@ class HideInImage():
         for point in points:
             for color in range(len(coverImage[point[0]][point[1]])):
                 if i == len(informationToHide):
+                    self.progress = 80
                     break
 
                 if informationToHide[i] == '1':
@@ -95,5 +103,7 @@ class HideInImage():
         im = Image.fromarray(coverImage.astype('uint8')).convert('RGB')
 
         im.save(outputFileName)
+
+        self.progress=90
 
         return seed, key, iv

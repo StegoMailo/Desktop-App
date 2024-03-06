@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1085</width>
-    <height>691</height>
+    <width>1081</width>
+    <height>682</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -153,7 +153,7 @@ background-color: rgb(138, 198, 253,0.5);</string>
     <rect>
      <x>630</x>
      <y>120</y>
-     <width>291</width>
+     <width>441</width>
      <height>41</height>
     </rect>
    </property>
@@ -168,7 +168,7 @@ background-color: rgb(138, 198, 253,0.5);</string>
     <string>Mahdi@gmail.com</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignCenter</set>
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
    </property>
   </widget>
   <widget class="QLabel" name="txtTitle">

@@ -1,22 +1,15 @@
-import mimetypes
-
-import AuthenticateEmail
-
-
 import base64
+import mimetypes
+import os
 from email.message import EmailMessage
 
-from email.mime.audio import MIMEAudio
-from email.mime.base import MIMEBase
-from email.mime.image import MIMEImage
-from email.mime.text import MIMEText
-
-import google.auth
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+from Gmail import AuthenticateEmail
 
-def gmail_send_message(messageToSend:str):
+
+def gmail_send_message(to:str,subject:str,attachmentPath:str,messageToSend:str,attachmentName:str):
   """Create and send an email message
   Print the returned  message id
   Returns: Message object, including message id
@@ -33,20 +26,20 @@ def gmail_send_message(messageToSend:str):
 
     mime_message.set_content(messageToSend)
 
-    mime_message["To"] = "1202444@student.birzeit.edu"
+    mime_message["To"] = to
     #mime_message["To"] = "guineapigsarecute3748@gmail.com"
-    mime_message["From"] = "guineapigsarecute3748@gmail.com"
-    mime_message["Subject"] = "Stego Testing"
+    mime_message["From"] = AuthenticateEmail.currentEmail
+    mime_message["Subject"] = subject
 
     # attachment
-    attachment_filename = "Goku Super Saiyan.mp4"
+    #attachment_filename = os.path.basename(attachmentPath)
     # guessing the MIME type
-    type_subtype, _ = mimetypes.guess_type(attachment_filename)
+    type_subtype, _ = mimetypes.guess_type(attachmentName)
     maintype, subtype = type_subtype.split("/")
 
-    with open(attachment_filename, "rb") as fp:
+    with open(attachmentPath, "rb") as fp:
       attachment_data = fp.read()
-    mime_message.add_attachment(attachment_data, maintype, subtype,filename=attachment_filename)
+    mime_message.add_attachment(attachment_data, maintype, subtype,filename=attachmentName)
 
     # encoded message
     encoded_message = base64.urlsafe_b64encode(mime_message.as_bytes()).decode()
@@ -65,4 +58,4 @@ def gmail_send_message(messageToSend:str):
     send_message = None
   return send_message
 
-gmail_send_message("Testing123")
+#gmail_send_message("Testing123")
