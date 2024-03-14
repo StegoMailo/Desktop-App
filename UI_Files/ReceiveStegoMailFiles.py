@@ -4,8 +4,11 @@ import time
 
 from PyQt5.QtCore import QSize, pyqtSignal, QObject
 from PyQt5.QtWidgets import QDialog, QStackedWidget, QFileDialog, QListWidgetItem, QWidget, QVBoxLayout, \
-    QLabel, QHBoxLayout, QMessageBox, QListWidget
+    QLabel, QHBoxLayout, QMessageBox, QListWidget, QPlainTextEdit
 from PyQt5.uic import loadUi
+
+from Gmail import DownloadEmail
+from Steganography import ExtractFromVideo, ExtractFromImage
 
 
 # Decryption Ui : it has three interfaces (Main Decryption , EmailStatus_Decryption ,ExtractEmailContent_Decryption)
@@ -63,7 +66,7 @@ class QCustomQWidget(QWidget):
 class Decryption(QDialog):
     stegoFile: str
     stackedWidget: QStackedWidget
-    #testList = [("hi", "Taha"), ("Iloveshwarma", "Izzat"), ("what's up bro", "Fathi")]
+    # testList = [("hi", "Taha"), ("Iloveshwarma", "Izzat"), ("what's up bro", "Fathi")]
     emailList = []
 
     def __init__(self, allWidgets):
@@ -73,7 +76,7 @@ class Decryption(QDialog):
         self.allWidgets = allWidgets
         self.stackedWidget = allWidgets.widgets
 
-        self.btnUploadStego.clicked.connect(self.uploadFile)
+        #self.btnUploadStego.clicked.connect(self.uploadFile)
 
         self.btnEmailStatus.clicked.connect(self.goToEmailStatus)
 
@@ -83,7 +86,7 @@ class Decryption(QDialog):
 
         # self.lwEmails.itemClicked.connect(self.goToEmailStatusFromList)
 
-        #self.fillList()
+        # self.fillList()
         self.lwEmails.itemClicked.connect(self.goToEmailStatusFromList)
         # QListWidget.
 
@@ -111,7 +114,7 @@ class Decryption(QDialog):
 
         print(customItem.getSubjectString() + "  " + customItem.getSenderString())
 
-        self.allWidgets.goToEmailStatusFromList(customItem,itemIndex)
+        self.allWidgets.goToEmailStatusFromList(customItem, itemIndex)
 
     def goToStegoContent(self):  # go to  stego content UI
         self.allWidgets.goToStegoContent()
@@ -141,6 +144,12 @@ class EmailStatus(QDialog):
     fileName = "File Name:"
     subject = "Subject:"
 
+    seed: int
+    key: str
+    iv: str
+
+    currentMailIndex: int
+
     def __init__(self, allWidgets):
         super(EmailStatus, self).__init__()
         loadUi("./UI_Files/Stego File Information.ui", self)
@@ -165,16 +174,29 @@ class EmailStatus(QDialog):
     def goToEncryption(self):  # go to  Gmail content UI
         self.allWidgets.goToEncryption()
 
-    def goToDecryption(self):
-        self.allWidgets.goToDecryption()
-
     def goToEmailInformation(self):
         self.allWidgets.goToEmailInformation()
 
     def extractStegoFile(self):
-        self.stackedWidget.setCurrentIndex(13)
-        self.allWidgets.widgetsObjects[13].encodeStegoFile()
-        self.stackedWidget.setFixedSize(QSize(752, 319))
+        # filter = "Images (*.png *.bmp )"
+        # outputDestination = QFileDialog.getOpenFileNames(self, 'Set Output Destination', '', filter=filter)
+        fileDirectory = QFileDialog.getExistingDirectory(self, "Set Output Destination", './')
+
+        if fileDirectory:
+            messageIndex = self.allWidgets.widgetsObjects[12].currentMailIndex
+            messageID = DownloadEmail.messageID[messageIndex]
+
+            DownloadEmail.downloadAttachment(messageID)
+
+            emailBody = DownloadEmail.bodies[messageIndex]
+
+            self.seed = int(emailBody.split("|")[1])
+            self.key = emailBody.split("|")[2].encode('utf-8')
+            self.iv = emailBody.split("|")[3].encode('utf-8')
+
+            self.stackedWidget.setCurrentIndex(13)
+            self.allWidgets.widgetsObjects[13].extractStegoFile(fileDirectory,messageIndex)
+            self.stackedWidget.setFixedSize(QSize(600, 400))
 
 
 class ExtractStego(QDialog):
@@ -190,7 +212,14 @@ class ExtractStego(QDialog):
         self.stackedWidget = allWidgets.widgets
         self.allWidgets = allWidgets
 
+        self.emailStatus = self.allWidgets.widgetsObjects[12]
+
         self.btnCancel.clicked.connect(self.cancelStegoMail)
+        self.btnDone.clicked.connect(self.backToDecryption)
+
+
+    def backToDecryption(self):
+        self.allWidgets.goToDecryption()
 
     def cancelStegoMail(self):
 
@@ -213,16 +242,21 @@ class ExtractStego(QDialog):
             self.paused = False
 
             self.allWidgets.goToStegoContent()
-
-
         else:
             self.paused = False
 
-        #print(QMessageBox.Yes)
+        # print(QMessageBox.Yes)
 
-    def encodeStegoFile(self):
-        progress = 0
-        t1 = threading.Thread(target=self.count, daemon=True, kwargs={'progress': progress})
+    def extractStegoFile(self, fileDirectory,messageIndex):
+
+        if DownloadEmail.attachmentNames[messageIndex].split(".")[-1] == "avi":
+            self.extractMedia = ExtractFromVideo.ExtractFromVideo()
+            t1 = threading.Thread(target=self.extractFromVideo, daemon=True,kwargs={"fileDirectory":fileDirectory,"messageIndex":messageIndex})
+        else:
+            self.extractMedia = ExtractFromImage.ExtractFromImage()
+            t1 = threading.Thread(target=self.extractFromImage, daemon=True,kwargs={"fileDirectory":fileDirectory,"messageIndex":messageIndex})
+
+
         t1.start()
 
         self.startTheThread()
@@ -231,13 +265,48 @@ class ExtractStego(QDialog):
         self.cancelled = False
         self.paused = False
 
-        t = threading.Thread(daemon=True, name='StatusThread', target=testingTreads,
+
+        self.btnDone.hide()
+        self.btnCancel.show()
+
+        t = threading.Thread(daemon=True, name='StatusThread', target=UpdateUI,
                              args=[self.updateUI, self])
         t.start()
 
     def updateUI(self, progress):
-        print(progress)
         self.progressBar.setValue(progress)
+
+        if progress == 100:
+            self.btnDone.show()
+            self.btnCancel.hide()
+
+            self.txtStatus.setText("Status: Content Extracted Successfully")
+        elif progress == 90:
+            self.txtStatus.setText("Status: Validating Extracted Content")
+        elif 40 == progress or progress == 80:
+            self.txtStatus.setText("Status: Extracting Content")
+        elif progress < 40:
+            self.txtStatus.setText("Status: Preparing file for extracting")
+
+        if  self.extractMedia.missingHeaderError:
+            print("Missing Header Error")
+
+        if  self.extractMedia.invalidSignatureError:
+            print("Invalid Signature")
+
+    def extractFromVideo(self, fileDirectory, messageIndex):
+        self.extractMedia.extractFromVideo("./tempFiles/" + DownloadEmail.attachmentNames[messageIndex],
+                                           fileDirectory + "/",
+                                           self.emailStatus.seed,
+                                           self.emailStatus.key,
+                                           self.emailStatus.iv)
+
+    def extractFromImage(self, fileDirectory, messageIndex):
+        self.extractMedia.extractFromImage("./tempFiles/" + DownloadEmail.attachmentNames[messageIndex],
+                                           fileDirectory + "/",
+                                           self.emailStatus.seed,
+                                           self.emailStatus.key,
+                                           self.emailStatus.iv)
 
     def count(self, progress):
         while not self.cancelled:
@@ -253,15 +322,17 @@ class Communicate(QObject):
     myGUI_signal = pyqtSignal(int)
 
 
-def testingTreads(callbackFunc, sentEmail):
+def UpdateUI(callbackFunc, retrievedMail):
     mySrc = Communicate()
     mySrc.myGUI_signal.connect(callbackFunc)
 
-    progress = 0
-    while not sentEmail.cancelled:
-        while sentEmail.paused:
+    while not retrievedMail.cancelled:
+        while retrievedMail.paused:
             continue
-        time.sleep(1)
-        progress += 1
-        mySrc.myGUI_signal.emit(progress)
+        mySrc.myGUI_signal.emit(retrievedMail.extractMedia.progress)
+        time.sleep(0.5)
+
+
     mySrc.myGUI_signal.emit(0)
+
+    retrievedMail.allWidgets.RemoveTempFiles()

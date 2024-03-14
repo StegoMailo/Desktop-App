@@ -1,20 +1,32 @@
-import os
+import math
+import random
+from hashlib import sha256
 
 import cv2
-import random
-import math
-from hashlib import sha256
+
 from Cipher.AES import AESCipher
-from base64 import b64decode
 
 
 class ExtractFromImage():
+
+    progress: int
+
+    missingHeaderError: bool
+    invalidSignatureError: bool
 
     # Function to convert a binary in string representation to integer
     def BinaryStringToInteger(self, BinaryString):
         return int(BinaryString, 2)
 
     def extractFromImage(self, watermarkedImagePath, outputDestination, seed, key, iv):
+
+
+        #print(seed)
+        #print(type(seed))
+
+        self.progress = 0
+        self.invalidSignatureError = False
+        self.missingHeaderError = False
 
         WatermarkedImage = cv2.imread(watermarkedImagePath)
         WatermarkedImage = cv2.cvtColor(WatermarkedImage, cv2.COLOR_BGR2RGB)
@@ -27,7 +39,9 @@ class ExtractFromImage():
         random.seed(seed)
 
         points = random.sample([[x, y] for x in range(len(WatermarkedImage)) for y in range(len(WatermarkedImage[0]))],
-                               math.floor(800 / 3) + 1)
+                               math.floor(1600 / 3) + 1)
+
+        self.progress = 10
 
         # Extract the bit stream of the logo information
 
@@ -36,7 +50,7 @@ class ExtractFromImage():
 
         LogoInformationBinary = []
 
-        LogoInformationLength = 800
+        LogoInformationLength = 1600
 
         i = 0
         for point in points:
@@ -49,6 +63,8 @@ class ExtractFromImage():
                 i += 1
             else:
                 continue
+
+        self.progress = 20
 
         # Convert the logo information to groups of 8 bits
 
@@ -84,10 +100,15 @@ class ExtractFromImage():
 
         logoInformationSplit = LogoInformation.split('|')
 
+        self.progress = 30
+
         if len(logoInformationSplit) != 4 and not logoInformationSplit[
             0].isnumeric():  # works because i think if the first part is false the rest isn't checked
+            self.missingHeaderError = True
             print("File Does Not Contain Any Hidden Information!")
             return
+
+        #print(LogoInformation)
 
         logoInformationSize = (len(logoInformationSplit[0]) + len(logoInformationSplit[1]) + len(
             logoInformationSplit[2]) + 3) * 8
@@ -122,6 +143,8 @@ class ExtractFromImage():
             else:
                 continue
 
+        self.progress = 70
+
         LogoBinaryList = []
         BinaryString = ""
 
@@ -136,14 +159,19 @@ class ExtractFromImage():
                 BinaryString = ""
                 i = 0
 
+        self.progress = 90
+
         generatedHash = sha256("".join(LogoBinaryList).encode('utf-8')).hexdigest()
 
         if generatedHash != fileHash:
+            self.invalidSignatureError = True
             print("File Was Not Extracted Correctly!")
         else:
             print("Extracted Successfully!")
 
         LogoAscii = []
+
+        self.progress = 95
 
         for BinaryString in LogoBinaryList:
             LogoAscii.append(self.BinaryStringToInteger(BinaryString))
@@ -159,5 +187,10 @@ class ExtractFromImage():
         # if not os.path.exists("./Extracted Files"):
         #     os.makedirs("Extracted Files")
 
+        print(fileName)
+        print(outputDestination)
+
         with open(outputDestination + fileName, 'wb') as f:
             f.write(LogoByteStream)
+
+        self.progress = 100

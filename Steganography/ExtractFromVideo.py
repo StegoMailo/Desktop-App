@@ -1,15 +1,24 @@
 import math
 import random
 from hashlib import sha256
-import os
+
 import cv2
 
 from Cipher.AES import AESCipher
 
 
 class ExtractFromVideo():
+    progress: int
 
-    def extractFromVideo(self, stegoVideoPath, originalSeed, key, iv):
+    missingHeaderError: bool
+    invalidSignatureError: bool
+
+    def extractFromVideo(self, stegoVideoPath, extractPath, originalSeed, key, iv):
+
+        self.progress = 0
+        self.invalidSignatureError = False
+        self.missingHeaderError = False
+
         stegoVideo = cv2.VideoCapture(stegoVideoPath)
 
         numberOfFrames = int(stegoVideo.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -29,6 +38,8 @@ class ExtractFromVideo():
         informationToExtractCounter = 1000
         numberOfBitsExtracted = 0
         extractedBits = []
+
+        self.progress = 10
 
         # Iterate Video through the random frames
         for frameNumber in randomFrameAccess:
@@ -65,6 +76,8 @@ class ExtractFromVideo():
                 else:
                     continue
                 break  # same here
+
+        self.progress = 20
 
         HiddenMessageInformationBinaryList = []
         BinaryString = ""
@@ -104,10 +117,13 @@ class ExtractFromVideo():
         hiddenMessageInfromationSize = (len(hiddenFileInformation[0]) + len(hiddenFileInformation[1]) + len(
             hiddenFileInformation[2]) + 3) * 8
 
+        self.progress = 30
+
         if len(hiddenFileInformation) != 4 and not hiddenFileInformation[
             0].isnumeric():  # works because I think if the first part is false the rest isn't checked
+            self.missingHeaderError = True
             print("File Does Not Contain Any Hidden Information!")
-            # return
+            return
 
         # Extract File Bit Stream
         seed = originalSeed
@@ -159,6 +175,7 @@ class ExtractFromVideo():
                     continue
                 break  # same here
 
+        self.progress = 70
         # Convert Bit Stream to Byte Stream and Get the Hash of the bit stream
 
         HiddenMessageInformationBinaryList = []
@@ -175,6 +192,8 @@ class ExtractFromVideo():
                 BinaryString = ""
                 i = 0
 
+        self.progress = 90
+
         generatedFileSignature = sha256(hiddenFileExtractedBits.encode('utf-8')).hexdigest()
 
         del hiddenFileExtractedBits
@@ -187,6 +206,7 @@ class ExtractFromVideo():
         if hiddenFileSignature == generatedFileSignature:
             print("File Extracted Correctly")
         else:
+            self.invalidSignatureError = True
             print("Failed")
         del HiddenMessageInformationBinaryList
         # for letter in HiddenMessageInformationAscii:
@@ -196,13 +216,14 @@ class ExtractFromVideo():
 
         HiddenMessageInformationUnencrypted = AESCipher().decrypt(bytes(HiddenMessageInformationAscii), key, iv)
 
-
-
+        self.progress = 95
         # Write Extracted File
-        if not os.path.exists("./Extracted Files"):
-            os.makedirs("Extracted Files")
-        with open("Extracted Files/" + hiddenFileName, 'wb') as f:
+        # if not os.path.exists("./Extracted Files"):
+        # os.makedirs("Extracted Files")
+        with open(extractPath + hiddenFileName, 'wb') as f:
             f.write(HiddenMessageInformationUnencrypted)
+
+        self.progress = 100
 
         del HiddenMessageInformationAscii
 

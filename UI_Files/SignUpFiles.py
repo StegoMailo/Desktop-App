@@ -71,10 +71,6 @@ class EmailSignUp(QDialog):
 
                 retval = msg.exec_()
 
-
-
-
-
     def goToQR(self):
         if self.allWidgets.emailSignUpValid:
             AuthenticateEmail.authenticated = True
@@ -200,7 +196,7 @@ class PINSignUp(QDialog):
         else:
             if e.key() == 16777219:  # backlash
                 self.tfPin2.setText("")
-                #self.tfPin1.setFocus()
+                # self.tfPin1.setFocus()
             else:
                 if (e.key() == 16777236):  # right arrow
                     self.tfPin3.setFocus()
@@ -215,7 +211,7 @@ class PINSignUp(QDialog):
         else:
             if e.key() == 16777219:  # backlash
                 self.tfPin3.setText("")
-                #self.tfPin2.setFocus()
+                # self.tfPin2.setFocus()
             else:
                 if (e.key() == 16777236):  # right arrow
                     self.tfPin4.setFocus()
@@ -229,7 +225,7 @@ class PINSignUp(QDialog):
         else:
             if e.key() == 16777219:  # backlash
                 self.tfPin4.setText("")
-                #self.tfPin3.setFocus()
+                # self.tfPin3.setFocus()
             else:
                 if e.key() == 16777220:  # enter
                     self.signUp()
@@ -329,7 +325,7 @@ class PINSignUp(QDialog):
                                 createUserRequest = requests.post(url=URL, json=createUserBody, verify=False)
                                 userPrivateKey = createUserRequest.text
 
-                                with open("../TestFiles/" + self.allWidgets.emailSignUp + "_PrivateKey.txt", "w") as f:
+                                with open("./UserPrivateKey/" + self.allWidgets.emailSignUp + "_PrivateKey.txt", "w") as f:
                                     f.write(userPrivateKey)
 
                                 self.allWidgets.PINSignUp = ""
@@ -352,7 +348,6 @@ class PINSignUp(QDialog):
                                 msg.addButton(QMessageBox.Ok)
 
                                 retval = msg.exec_()
-
 
     def backToQR(self):
         self.widgets.setCurrentIndex(5)

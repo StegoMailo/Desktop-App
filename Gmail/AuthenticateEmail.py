@@ -42,11 +42,11 @@ def authenticateUser():
             )
 
             creds = flow.run_local_server(port=0)
-            print(flow.authorization_url())
+            #print(flow.authorization_url())
 
-        # Save the credentials for the next run
-        with open("./Gmail/token.json", "w") as token:
-            token.write(creds.to_json())
+        #Save the credentials for the next run
+        # with open("./Gmail/token.json", "w") as token:
+        #     token.write(creds.to_json())
 
     URL = "https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + creds.token
 

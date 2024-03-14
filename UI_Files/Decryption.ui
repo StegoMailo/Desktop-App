@@ -65,7 +65,7 @@ background-color: rgb(248, 248, 248);</string>
      <x>330</x>
      <y>230</y>
      <width>771</width>
-     <height>361</height>
+     <height>451</height>
     </rect>
    </property>
    <property name="font">
@@ -93,32 +93,6 @@ background-color: rgb(138, 198, 253);
 }
 
 </string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnUploadStego">
-   <property name="geometry">
-    <rect>
-     <x>320</x>
-     <y>670</y>
-     <width>351</width>
-     <height>40</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(231, 231, 231);
-color: black;
-border: 0.5px solid #000000;
-</string>
-   </property>
-   <property name="text">
-    <string>Open Stego Media From Device</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btnEncryption">

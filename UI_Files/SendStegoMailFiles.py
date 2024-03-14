@@ -15,6 +15,7 @@ from Gmail import SendEmail
 from Steganography import HideInImage, HideInVideo
 
 
+
 # Encryption Ui : it has three interfaces (Main Encrypting , Advanced Settings ,Gmail Content)
 
 class DraggableFilesQLabelSecretFile(QLabel):
@@ -529,7 +530,7 @@ class SentEmailStatus(QDialog):
         self.paused = False
 
 
-        print(self.allWidgets.coverMediaPath)
+        #print(self.allWidgets.coverMediaPath)
         if self.allWidgets.coverMediaPath.split(".")[-1] == "mp4":
             self.hideMedia = HideInVideo.HideInVideo()
             t1 = threading.Thread(target=self.encodeVideo, daemon=True)
@@ -615,12 +616,14 @@ def SendingStegoThread(callbackFunc, sentEmailStatus):
         mySrc.myGUI_signal.emit(sentEmailStatus.hideMedia.progress)
         time.sleep(0.5)
 
+    attachmentName = os.path.basename(sentEmailStatus.allWidgets.coverMediaPath).split(".")[0] + ".png"
+
     SendEmail.gmail_send_message(sentEmailStatus.allWidgets.to,
                                  sentEmailStatus.allWidgets.subject,
                                  sentEmailStatus.stegoFileLocation,
                                  sentEmailStatus.allWidgets.body + "\n\n|" + str(sentEmailStatus.seed) + "|" + str(
                                      sentEmailStatus.key) + "|" + str(sentEmailStatus.iv)
-                                 , os.path.basename(sentEmailStatus.allWidgets.coverMediaPath))
+                                 , attachmentName)
 
     # print(sentEmailStatus.allWidgets.body)
     # print(str(sentEmailStatus.seed))
@@ -630,4 +633,3 @@ def SendingStegoThread(callbackFunc, sentEmailStatus):
 
     mySrc.myGUI_signal.emit(100)
 
-    os.remove("./tempFiles")

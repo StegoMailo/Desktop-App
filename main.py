@@ -1,9 +1,8 @@
-import os
 import sys
 
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import QSize
-from PyQt5.QtWidgets import QApplication, QStackedWidget, QDialog, QPlainTextEdit
+from PyQt5.QtWidgets import QApplication, QStackedWidget, QDialog
 from PyQt5.uic import loadUi
 
 from Gmail import AuthenticateEmail, DownloadEmail
@@ -15,8 +14,9 @@ from UI_Files.ReceiveStegoMailFiles import Decryption, EmailStatus, ExtractStego
 from UI_Files.SendStegoMailFiles import Encryption, AdvancedSettings, EmailInformation, SentEmailStatus
 from UI_Files.SignInFiles import EmailSignIn, QRSignIn, PINSignIn
 from UI_Files.SignUpFiles import EmailSignUp, QRSignUp, PINSignUp
+import errno, os, stat, shutil
 
-os.remove("./tempFiles")
+
 
 class WelcomeScreen(QDialog):
     def __init__(self):
@@ -33,6 +33,21 @@ class WelcomeScreen(QDialog):
 
 
 class allWidgets():
+
+    # https://stackoverflow.com/a/1214935/17870878
+    @staticmethod
+    def handleRemoveReadonly(func, path, exc):
+        excvalue = exc[1]
+        if func in (os.rmdir, os.remove) and excvalue.errno == errno.EACCES:
+            os.chmod(path, stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)  # 0777
+            func(path)
+        else:
+            raise
+    @staticmethod
+    def RemoveTempFiles():
+        if os.path.exists("./tempFiles"):
+            shutil.rmtree("./tempFiles", ignore_errors=False, onerror=allWidgets.handleRemoveReadonly)
+
     widgets: QStackedWidget
     widgetsObjects = []
 
@@ -130,7 +145,7 @@ class allWidgets():
         allWidgets.widgets.setFixedSize(QSize(1223, 682))
     @staticmethod
     def goToEmailInformation():
-        allWidgets.widgetsObjects[9].txtEmailInUse.setText(allWidgets.emailSignIn)
+        allWidgets.widgetsObjects[9].txtEmailInUse.setText(AuthenticateEmail.currentEmail)
         allWidgets.widgets.setCurrentIndex(9)
         allWidgets.widgets.setFixedSize(QSize(1081, 682))
 
@@ -143,7 +158,11 @@ class allWidgets():
         tempList = []
 
         for i in range(len(DownloadEmail.messageID)):
-            tempList.append([DownloadEmail.messageID[i],DownloadEmail.senders[i],DownloadEmail.subjects[i],DownloadEmail.bodies[i]])
+            body =  DownloadEmail.bodies[i].split("|")[0]
+            tempList.append([DownloadEmail.messageID[i],
+                             DownloadEmail.senders[i],
+                             DownloadEmail.subjects[i],
+                            body])
 
         allWidgets.widgetsObjects[11].emailList = tempList
         allWidgets.widgetsObjects[11].fillList()
@@ -160,12 +179,13 @@ class allWidgets():
 
         allWidgets.widgetsObjects[12].from_ = customItem.getSenderString()
         allWidgets.widgetsObjects[12].subject = customItem.getSubjectString()
+        allWidgets.widgetsObjects[12].currentMailIndex = elementIndex
 
         allWidgets.widgetsObjects[12].tfFrom .setText(allWidgets.widgetsObjects[12].from_)
         allWidgets.widgetsObjects[12].tfSubject.setText(allWidgets.widgetsObjects[12].subject)
 
         allWidgets.widgetsObjects[12].tfFileName.setText(DownloadEmail.attachmentNames[elementIndex])
-        allWidgets.widgetsObjects[12].taBody.setPlainText(DownloadEmail.bodies[elementIndex])
+        allWidgets.widgetsObjects[12].taBody.setPlainText(DownloadEmail.bodies[elementIndex].split("|")[0])
 
 
 
@@ -177,6 +197,8 @@ class allWidgets():
         allWidgets.widgets.setCurrentIndex(12)  # change to 12
         allWidgets.widgets.setFixedSize(QSize(1128, 762))
 
+
+allWidgets.RemoveTempFiles()
 
 app = QApplication(sys.argv)
 
@@ -253,3 +275,4 @@ allWidgets.widgets.show()
 # allWidgets.widgets.setCurrentIndex((7))
 
 app.exec_()
+

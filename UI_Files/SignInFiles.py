@@ -112,6 +112,8 @@ class QRSignIn(QDialog):
         super(QRSignIn, self).__init__()
         loadUi('./UI_Files/QR Sign In.ui', self)
 
+        self.setAcceptDrops(True)
+
         self.widgets = allWidgets.widgets
         self.allWidgets = allWidgets
 
@@ -178,7 +180,7 @@ class QRSignIn(QDialog):
                                   "qrSignature": QRdataSignature}
 
                 checkQRRequest = requests.post(url=URL, json=createUserBody, verify=False)
-                print(checkQRRequest.text)
+                #print(checkQRRequest.text)
                 if checkQRRequest.status_code == 200:
                     return True
                 else:

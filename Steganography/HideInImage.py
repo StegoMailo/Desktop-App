@@ -1,3 +1,5 @@
+import os.path
+
 import cv2
 from PIL import Image
 import random
@@ -44,7 +46,7 @@ class HideInImage():
 
         watermarkBitStreamSize = len(watermarkAsBinaryString)
         fileHash = sha256(watermarkAsBinaryString.encode('utf-8')).hexdigest()
-        watermarkInformationToHide = str(watermarkBitStreamSize) + "|" + watermarkFileName + "|" + fileHash + "|"
+        watermarkInformationToHide = str(watermarkBitStreamSize) + "|" + os.path.basename(watermarkFileName) + "|" + fileHash + "|"
 
         informationAsAscii = []
 
