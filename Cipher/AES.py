@@ -34,4 +34,4 @@ class AESCipher():
 # print("Cipher Text:", str(cipherText) + " Key: " + str(key) + " IV: " +str(iv))
 # # Decryption
 # decrypted_data = aes_cipher.decrypt(cipherText, key, iv)
-# print("Decrypted:", str(decrypted_data)[2:][:-1])
+# print("Decrypted:",  decrypted_data.decode('utf-8'))
